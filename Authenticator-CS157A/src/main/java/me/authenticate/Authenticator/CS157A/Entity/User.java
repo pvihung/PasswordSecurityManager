@@ -1,4 +1,4 @@
-package me.authenticate.Authenticator.CS157A.Entity;
+package main.java.me.authenticate.Authenticator.CS157A.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;

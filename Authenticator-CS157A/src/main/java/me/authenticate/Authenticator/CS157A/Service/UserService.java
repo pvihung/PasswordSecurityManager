@@ -1,8 +1,8 @@
-package me.authenticate.Authenticator.CS157A.Service;
+package main.java.me.authenticate.Authenticator.CS157A.Service;
 
 import lombok.RequiredArgsConstructor;
-import me.authenticate.Authenticator.CS157A.Entity.User;
-import me.authenticate.Authenticator.CS157A.Repository.UserRepo;
+import main.java.me.authenticate.Authenticator.CS157A.Entity.User;
+import main.java.me.authenticate.Authenticator.CS157A.Repository.UserRepo;
 import org.springframework.stereotype.Service;
 
 @Service

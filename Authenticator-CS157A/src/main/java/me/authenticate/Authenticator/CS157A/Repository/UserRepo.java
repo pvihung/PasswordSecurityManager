@@ -1,6 +1,6 @@
-package me.authenticate.Authenticator.CS157A.Repository;
+package main.java.me.authenticate.Authenticator.CS157A.Repository;
 
-import me.authenticate.Authenticator.CS157A.Entity.User;
+import main.java.me.authenticate.Authenticator.CS157A.Entity.User;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 

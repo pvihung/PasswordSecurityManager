@@ -1,8 +1,8 @@
-package me.authenticate.Authenticator.CS157A.Controller;
+package main.java.me.authenticate.Authenticator.CS157A.Controller;
 
 import lombok.RequiredArgsConstructor;
-import me.authenticate.Authenticator.CS157A.Entity.User;
-import me.authenticate.Authenticator.CS157A.Service.UserService;
+import main.java.me.authenticate.Authenticator.CS157A.Entity.User;
+import main.java.me.authenticate.Authenticator.CS157A.Service.UserService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
