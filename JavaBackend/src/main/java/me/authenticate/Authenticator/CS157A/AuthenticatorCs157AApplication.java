@@ -1,4 +1,4 @@
-package main.java.me.authenticate.Authenticator.CS157A;
+package me.authenticate.Authenticator.CS157A;
 
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
