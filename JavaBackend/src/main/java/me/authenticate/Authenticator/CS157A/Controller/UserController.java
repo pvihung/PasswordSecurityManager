@@ -1,5 +1,6 @@
 package main.java.me.authenticate.Authenticator.CS157A.Controller;
 
+import lombok.Data;
 import lombok.RequiredArgsConstructor;
 import main.java.me.authenticate.Authenticator.CS157A.Entity.User;
 import main.java.me.authenticate.Authenticator.CS157A.Service.UserService;
