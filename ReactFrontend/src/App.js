@@ -1,5 +1,8 @@
 import './App.css';
 import Button from './Buttons/Buttons.js';
+import ErrorPage from './Pages/Error404.js';
+import MainPage from './Pages/MainPage.js';
+import {Route, Routes} from 'react-router-dom';
 import { useState } from 'react';
 
 function App() {
@@ -7,6 +10,11 @@ function App() {
   const [username, setUsername] = useState('');
 
   return (
+    <div>
+        <Routes>
+            <Route path='/' element={<MainPage />} />
+            <Route path='*' element={<ErrorPage />} />
+        </Routes>
     <div className="App">
       <h1 className="text-center">Hello bootybutthead!</h1>
       <p>Aint noway I working on frontend right now :sob:.</p>

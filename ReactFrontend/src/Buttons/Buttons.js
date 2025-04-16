@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import ReactiveButton from 'reactive-button';
 
-export default function Button() {
+export default function Button({idleText = "Submit"}) {
   const [state, setState] = useState('idle');
 
   const onClickHandler = () => {
@@ -16,7 +16,7 @@ export default function Button() {
   return (
     <ReactiveButton
       buttonState={state}
-      idleText="Submit"
+      idleText={idleText}
       loadingText="Loading"
       successText="Done"
       onClick={onClickHandler}
