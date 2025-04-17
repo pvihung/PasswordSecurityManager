@@ -16,6 +16,8 @@ export default function Button({idleText = "Submit"}) {
   return (
     <ReactiveButton
       buttonState={state}
+      color = 'light'
+      size = 'small'
       idleText={idleText}
       loadingText="Loading"
       successText="Done"
