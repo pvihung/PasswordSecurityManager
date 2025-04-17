@@ -23,7 +23,7 @@ export default function MainPage() {
             margin: '0 auto',
             fontFamily: 'Garamond'
           }}>
-            <h2 className="Heading" style={{ textAlign: 'center'}}>Enter your Username and Password</h2>
+            <h2 className="Heading" style={{ textAlign: 'center',}}>Enter your Username and Password</h2>
 
             <input
               type="text"
