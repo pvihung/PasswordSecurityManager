@@ -14,10 +14,6 @@ import org.springframework.web.bind.annotation.RestController;
 public class UserController {
     private final UserService service;
 
-//    public UserController(UserService service) {
-//        this.service = service;
-//    }
-
     @PostMapping("/user")
     public User saveUser(@RequestBody User u) {
         return service.saveUser(u);
