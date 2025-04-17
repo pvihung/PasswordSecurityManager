@@ -1,4 +1,4 @@
-package main.java.me.authenticate.Authenticator.CS157A.Entity;
+package me.authenticate.Authenticator.CS157A.Entity;
 
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
@@ -13,4 +13,6 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int userNumber;
     private String name;
+    private String email;
+    private String phoneNumber;
 }
