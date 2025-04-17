@@ -47,7 +47,7 @@ export default function MainPage() {
               alignItems: 'center',
               flexDirection: 'column',
               gap: '10px',
-              marginTop: '20px'
+              marginTop: '5px'
             }}>
               <Button idleText="Login" />
               <Button idleText="Forgot Password?" />
