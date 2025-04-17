@@ -8,15 +8,22 @@ export default function MainPage() {
     return (
     <>
         <div className="AddingAccount">
+        <h1 className='Title' style ={{ textAlign: 'center',
+                                           height: '30px',
+                                           fontFamily: 'Myriad Pro',
+                                           fontWeight: 'bold',
+                                           fontSize: '40px'
+        }}>PASSWORD MANAGER</h1>
           <div style={{
             backgroundColor: '#f9f9f9',
-            padding: '30px',
+            padding: '50px',
             borderRadius: '12px',
             boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-            maxWidth: '500px',
-            margin: '0 auto'
+            maxWidth: '5000px',
+            margin: '0 auto',
+            fontFamily: 'Georgia'
           }}>
-            <h2 className="Heading" style={{ textAlign: 'center' }}>Enter your Username and Password</h2>
+            <h2 className="Heading" style={{ textAlign: 'center'}}>Enter your Username and Password</h2>
 
             <input
               type="text"
