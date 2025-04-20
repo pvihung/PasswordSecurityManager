@@ -5,6 +5,8 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
+import java.time.LocalDateTime;
+import org.json.JSONObject;
 
 @Entity
 @Data
@@ -14,8 +16,8 @@ public class Login {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int loginId;
     private int userId;
-    private Login previousLogin;
+    private LocalDateTime previousLogin;
     private String IPAdd;
-    private String [] devices;
+    private JSONObject deviceInfo;
 
 }
