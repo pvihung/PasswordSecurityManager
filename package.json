@@ -1,0 +1,22 @@
+{
+  "name": "passwordsecuritymanager",
+  "version": "1.0.0",
+  "description": "**Group Members:** Hung Pham, Justin Dam, Tony Fang",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pvihung/PasswordSecurityManager.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/pvihung/PasswordSecurityManager/issues"
+  },
+  "homepage": "https://github.com/pvihung/PasswordSecurityManager#readme",
+  "dependencies": {
+    "passwordsecuritymanager": "file:"
+  }
+}
