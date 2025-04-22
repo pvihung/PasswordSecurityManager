@@ -1,23 +1,24 @@
 import { useState } from 'react';
 import ReactiveButton from 'reactive-button';
 
-export default function Button({idleText = "Submit"}) {
+export default function Button({ idleText = "Submit", onClick }) {
   const [state, setState] = useState('idle');
 
   const onClickHandler = () => {
     setState('loading');
-
-    // send an HTTP request
     setTimeout(() => {
       setState('success');
-    }, 2000);
+      if (onClick) {
+        onClick();
+      }
+    }, 1500); 
   };
 
   return (
     <ReactiveButton
       buttonState={state}
-      color = 'light'
-      size = 'small'
+      color="blue"
+      size="small"
       idleText={idleText}
       loadingText="Loading"
       successText="Done"
