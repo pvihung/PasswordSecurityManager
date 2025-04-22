@@ -18,6 +18,6 @@ public class Login {
     private int userId;
     private LocalDateTime previousLogin;
     private String IPAdd;
-    private JSONObject deviceInfo;
+    //private JSONObject deviceInfo;
 
 }

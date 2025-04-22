@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-AuthenticatorCs157AApplication<Authenticator-CS157A>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "me.authenticate.Authenticator.CS157A.AuthenticatorCs157AApplication",
+            "projectName": "Authenticator-CS157A",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}
