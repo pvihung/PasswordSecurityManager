@@ -20,6 +20,13 @@ export default function SecondPage() {
     { siteName: 'Twitter', username: 'Tony', password: 'mypassword789', createdAt: '2025-04-18' },
   ];
 
+    const sendAccountInfo = async (e) => {
+        //e.preventDefault();
+        console.log(setSiteName);
+        console.log(setUsername);
+        console.log(setPassword);
+        console.log(setConfirmPassword);
+      }
   const groupedAccounts = accounts.reduce((acc, account) => {
     if (!acc[account.siteName]) {
       acc[account.siteName] = [];
@@ -194,7 +201,9 @@ export default function SecondPage() {
             }}
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
-          <Button idleText="Save Account" />
+
+
+          <Button idleText="Save Account" onClick={sendAccountInfo}/>
         </div>
       </Popup>
 
@@ -205,4 +214,6 @@ export default function SecondPage() {
       />
     </div>
   );
+
+
 }

@@ -4,9 +4,7 @@ import ErrorPage from './Pages/Error404.js';
 import MainPage from './Pages/MainPage.js';
 import MenuPage from './Pages/MenuPage.js';
 import {Route, Routes} from 'react-router-dom';
-
 import SecondPage from './Pages/SecondPage.js';
-import { Route, Routes } from 'react-router-dom';
 import Popup from 'reactjs-popup';
 function App() {
   return (
