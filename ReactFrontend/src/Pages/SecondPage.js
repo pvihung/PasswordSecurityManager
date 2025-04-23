@@ -18,6 +18,23 @@ export default function SecondPage() {
     { siteName: 'Twitter', username: 'Jane', password: 'mypassword', createdAt: '2025-04-18' },
     { siteName: 'Twitter', username: 'Emily', password: 'mypassword', createdAt: '2025-04-18' },
     { siteName: 'Twitter', username: 'Tony', password: 'mypassword789', createdAt: '2025-04-18' },
+    { siteName: 'LinkedIn', username: 'Alice', password: 'alice123', createdAt: '2025-04-17' },
+    { siteName: 'LinkedIn', username: 'Bob', password: 'bob123', createdAt: '2025-04-17' },
+    { siteName: 'LinkedIn', username: 'Charlie', password: 'charlie123', createdAt: '2025-04-17' },
+    { siteName: 'Instagram', username: 'Sophia', password: 'sophia123', createdAt: '2025-04-16' },
+    { siteName: 'Instagram', username: 'Liam', password: 'liam123', createdAt: '2025-04-16' },
+    { siteName: 'Reddit', username: 'Emma', password: 'reddit123', createdAt: '2025-04-15' },
+    { siteName: 'Reddit', username: 'Noah', password: 'reddit456', createdAt: '2025-04-15' },
+    { siteName: 'Pinterest', username: 'Olivia', password: 'pinterest123', createdAt: '2025-04-14' },
+    { siteName: 'Pinterest', username: 'James', password: 'pinterest456', createdAt: '2025-04-14' },
+    { siteName: 'Snapchat', username: 'Ava', password: 'snapchat123', createdAt: '2025-04-13' },
+    { siteName: 'Bank of America', username: 'William', password: 'bank123', createdAt: '2025-04-12' },
+    { siteName: 'Bank of America', username: 'Mia', password: 'bank456', createdAt: '2025-04-12' },
+    { siteName: 'Chase', username: 'Lucas', password: 'chase123', createdAt: '2025-04-11' },
+    { siteName: 'Cornhub', username: 'Sophia', password: 'corn123', createdAt: '2025-04-10' },
+    { siteName: 'Cornhub', username: 'Liam', password: 'corn456', createdAt: '2025-04-10' },
+    { siteName: 'MySJSU', username: 'Emma', password: 'sjsu123', createdAt: '2025-04-09' },
+    { siteName: 'League of Legends', username: 'Noah', password: 'lol123', createdAt: '2025-04-08' },
   ];
 
   const groupedAccounts = accounts.reduce((acc, account) => {
@@ -33,7 +50,9 @@ export default function SecondPage() {
       style={{
         padding: '100px',
         backgroundColor: '#f6f6f6',
-        minHeight: '30vh',
+        minHeight: '200vh',
+        maxHeight: '200vh',
+        overflowY: 'auto',
         fontFamily: 'Inria Serif, serif',
         color: '#333',
       }}
@@ -49,14 +68,16 @@ export default function SecondPage() {
           fontFamily: 'Inria Serif, serif',
         }}
       >
-        Account Manager
+        Password Manager
       </h1>
       {/*Making it suitable for all screen*/}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px',
+          gap: '20px', 
+          overflowY: 'auto',
+          whiteSpace: 'nowrap',
         }}
       > 
         {/* Map through the grouped accounts and display them */}
@@ -69,18 +90,22 @@ export default function SecondPage() {
               borderRadius: '10px',
               padding: '20px',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+              minWidth: '300px',
             }}
           >
             {/*Display siteName*/}
             <h2
               style={{
-                borderBottom: '2px solid #eaeaea',
-                paddingBottom: '10px',
-                marginBottom: '20px',
+                borderBottom: '2.2px solid #eaeaea', // Add a line below the title ~ just make it look cooler lmao
+                paddingBottom: '5px',
+                marginBottom: '10px',
                 color: '#555',
-                fontSize: '2.5em',
+                fontSize: '1.8em',
                 fontFamily: 'Inria Serif, serif',
-                fontWeight: 'bold'
+                fontStyle: 'italic',
+                fontWeight: 'bold',
+                textAlign: 'left',
+                textSizeAdjust: 'auto',
               }}
             >
                 {/* Dislay variables inside Site*/}
@@ -115,6 +140,7 @@ export default function SecondPage() {
           </div>
         ))}
       </div>
+
       {/* Button with Popup */}
       <Popup
         open={isPopupOpen}

@@ -1,12 +1,13 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
+import java.time.LocalDateTime;
+
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
-import java.time.LocalDateTime;
-import org.json.JSONObject;
+// import org.json.JSONObject;
 
 @Entity
 @Data
