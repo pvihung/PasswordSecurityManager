@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import Button from '../Buttons/Buttons';
 import Popup from 'reactjs-popup';
+import './SecondPage.css';
 
 export default function SecondPage() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
@@ -37,6 +38,24 @@ export default function SecondPage() {
     { siteName: 'League of Legends', username: 'Noah', password: 'lol123', createdAt: '2025-04-08' },
   ];
 
+    const sendAccountInfo = async (e) => {
+        console.log(siteName);
+        console.log(username);
+        console.log(password);
+        console.log(confirmPassword);
+        try {
+            const postData = {appName: siteName, "username": username, "password": password};
+            const response = await fetch("http://localhost:8080/api/vaultentry", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(postData)
+            });
+            const jsonData = await response.json();
+            console.log("The vaultentry creation worked: ", jsonData);
+        } catch (exception) {
+            console.error("It didn't work lol: \n", exception.message);
+        }
+      }
   const groupedAccounts = accounts.reduce((acc, account) => {
     if (!acc[account.siteName]) {
       acc[account.siteName] = [];
@@ -70,12 +89,12 @@ export default function SecondPage() {
       >
         Password Manager
       </h1>
-      {/*Making it suitable for all screen*/}
+            {/*Making it suitable for all screen*/}
       <div
         style={{
           display: 'grid',
           gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-          gap: '20px', 
+          gap: '20px',
           overflowY: 'auto',
           whiteSpace: 'nowrap',
         }}
@@ -90,7 +109,6 @@ export default function SecondPage() {
               borderRadius: '10px',
               padding: '20px',
               boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-              minWidth: '300px',
             }}
           >
             {/*Display siteName*/}
@@ -108,7 +126,7 @@ export default function SecondPage() {
                 textSizeAdjust: 'auto',
               }}
             >
-                {/* Dislay variables inside Site*/}
+                {/* Display variables inside Site*/}
               {siteName}
             </h2>
             {users.map((user, userIndex) => (
@@ -140,7 +158,6 @@ export default function SecondPage() {
           </div>
         ))}
       </div>
-
       {/* Button with Popup */}
       <Popup
         open={isPopupOpen}
@@ -171,53 +188,25 @@ export default function SecondPage() {
           <input
             type="text"
             placeholder="Site Name"
-            className="text-center"
-            style={{
-              padding: '10px',
-              margin: '5px 0',
-              borderRadius: '8px',
-              border: '1px solid #ccc',
-              width: '100%',
-            }}
+            className="inputBlock"
             onChange={(event) => setSiteName(event.target.value)}
           />
           <input
             type="text"
             placeholder="Username"
-            className="text-center"
-            style={{
-              padding: '10px',
-              margin: '5px 0',
-              borderRadius: '8px',
-              border: '1px solid #ccc',
-              width: '100%',
-            }}
+            className="inputBlock"
             onChange={(event) => setUsername(event.target.value)}
           />
           <input
             type="password"
             placeholder="Password"
-            className="text-center"
-            style={{
-              padding: '10px',
-              margin: '5px 0',
-              borderRadius: '8px',
-              border: '1px solid #ccc',
-              width: '100%',
-            }}
+            className="inputBlock"
             onChange={(event) => setPassword(event.target.value)}
           />
           <input
             type="password"
             placeholder="Confirm Password"
-            className="text-center"
-            style={{
-              padding: '10px',
-              margin: '5px 0',
-              borderRadius: '8px',
-              border: '1px solid #ccc',
-              width: '100%',
-            }}
+            className="inputBlock"
             onChange={(event) => setConfirmPassword(event.target.value)}
           />
           <Button idleText="Save Account" />
