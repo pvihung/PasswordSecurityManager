@@ -16,10 +16,10 @@ public class VaultEntry {
     private int userID;
     private String appName;
     private String username;
-    private static String password;
+    private String password;
     private LocalDateTime lastModified;
 
-    public static void encrypt() {
+    public void encrypt() {
         StringBuilder encryptedPassword = new StringBuilder(password);
         int charVal;
         for(int i = 0; i < password.length(); i++) {
@@ -39,7 +39,7 @@ public class VaultEntry {
         password = encryptedPassword.toString();
     }
 
-    public static String decrypt() {
+    public String decrypt() {
         StringBuilder decryptedPassword = new StringBuilder(password);
         int charVal;
         for(int i = 0; i < password.length(); i++) {

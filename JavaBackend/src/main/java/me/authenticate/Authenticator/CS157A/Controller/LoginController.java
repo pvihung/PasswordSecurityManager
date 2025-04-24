@@ -16,7 +16,7 @@ public class LoginController {
 
     @PostMapping("/login")
     public Login postMethodName(@RequestBody Login l) {
-        //TODO: process POST request
+        // TODO: process POST request
         
         return service.saveLogin(l);
     }

@@ -26,3 +26,28 @@ export default function Button({ idleText = "Submit", onClick }) {
     />
   );
 }
+
+export function MenuButton({idleText = "Go!"}) {
+  const [state, setState] = useState('idle');
+
+  const onClickHandler = () => {
+    setState('loading');
+
+    // send an HTTP request
+    setTimeout(() => {
+      setState('success');
+    }, 1200);
+  };
+
+  return (
+    <ReactiveButton
+      buttonState={state}
+      messageDuration="1200"
+      size="large"
+      idleText={idleText}
+      loadingText="Loading"
+      successText="Done"
+      onClick={onClickHandler}
+    />
+  );
+}
