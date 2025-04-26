@@ -51,3 +51,44 @@ export function MenuButton({idleText = "Go!"}) {
     />
   );
 }
+
+export function Button2({ idleText = "-", onClick, style = {}, className = "" }) {
+  const [state, setState] = useState('idle');
+
+  const onClickHandler = () => {
+    setState('loading');
+    setTimeout(() => {
+      setState('success');
+      if (onClick) {
+        onClick();
+      }
+    }, 1500); 
+  };
+
+  return (
+    <ReactiveButton
+      buttonState={state}
+      color="red"
+      size="small"
+      idleText={idleText}
+      loadingText="Removing"
+      successText="Removed"
+      style={{
+        transform: 'translateY(-50%)', 
+        width: '30px', 
+        height: '30px', 
+        fontSize: '20px', 
+        fontWeight: 'bold', 
+        textAlign: 'center', 
+        lineHeight: '30px', 
+        borderRadius: '0', 
+        padding: '0', 
+        margin: '0', 
+        cursor: 'pointer', 
+
+      }}
+      className={className}
+      onClick={onClickHandler}
+    />
+  );
+}
