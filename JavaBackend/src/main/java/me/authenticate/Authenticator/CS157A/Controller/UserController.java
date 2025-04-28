@@ -22,9 +22,9 @@ public class UserController {
 
     @PostMapping("/verifylogin")
     public ResponseEntity<?> accountExists(@RequestBody LoginDTO loginInstance) {
-        boolean exists = service.accountExists(loginInstance.getUsername(), loginInstance.getPassword());
-        if (exists) {
-            return ResponseEntity.ok().body("Yeah the account is there. You're good.");
+        int exists = service.accountExists(loginInstance.getUsername(), loginInstance.getPassword());
+        if (exists != 0) {
+            return ResponseEntity.ok().body(exists);
         } else {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect username or password.");
         }

@@ -19,7 +19,7 @@ public class ForgotRequest {
     private boolean used = false;
     private String sentTo;
 //    private Media verificationMethod;
-
+//
 //    private enum Media {
 //        EMAIL, PHONE
 //    }

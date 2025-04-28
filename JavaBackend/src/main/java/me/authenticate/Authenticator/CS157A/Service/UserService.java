@@ -16,8 +16,12 @@ public class UserService {
         return repo.save(u);
     }
 
-    public boolean accountExists(String username, String password) {
+    public int accountExists(String username, String password) {
         Optional<User> u = repo.findUserByUsername(username);
-        return u.map(user -> user.getMasterPass().equals(password)).orElse(false);
+
+        if ((u.isPresent()) && u.get().getMasterPass().equals(password)) {
+            return u.get().getUserID();
+        }
+        return 0;
     }
 }
