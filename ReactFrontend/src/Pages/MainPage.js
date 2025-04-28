@@ -15,20 +15,20 @@ export default function MainPage() {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password})
             });
-            const validation = await response.text();
+            const userID = await response.text();
+
             console.log(response.type);
             console.log(response.ok);
             console.log(response.status);
             if (response.ok) {
-                console.log(validation);
-                navigate('/manager');
+                navigate('/manager', {state: {data: userID}});
             } else {
-                console.error(validation);
+                console.error(userID);
             }
         } catch (error) {
             console.error("Something went wrong here: ", error);
         }
-    }
+    };
 
     return (
         <>

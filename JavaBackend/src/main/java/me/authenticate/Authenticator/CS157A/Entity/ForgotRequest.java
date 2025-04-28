@@ -18,9 +18,9 @@ public class ForgotRequest {
     private LocalDateTime requestedAt;
     private boolean used = false;
     private String sentTo;
-    private Media verificationMethod;
-
-    private enum Media {
-        EMAIL, PHONE
-    }
+//    private Media verificationMethod;
+//
+//    private enum Media {
+//        EMAIL, PHONE
+//    }
 }

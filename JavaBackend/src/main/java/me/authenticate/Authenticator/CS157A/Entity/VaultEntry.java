@@ -1,9 +1,6 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 
@@ -13,7 +10,10 @@ public class VaultEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int entryID;
-    private int userID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    private User user;
     private String appName;
     private String username;
     private String password;
