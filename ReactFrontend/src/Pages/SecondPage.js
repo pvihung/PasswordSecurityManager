@@ -76,8 +76,11 @@ export default function SecondPage() {
                     textAlign: 'center',
                     color: '#333',
                     marginBottom: '30px',
-                    fontSize: '2.5em',
+                    fontSize: '3.2em',
                     fontWeight: 'bold',
+                    height: '50px',
+                    fontStyle: 'italic',
+                    fontFamily: 'Georgia',
                 }}
             >
                 Password Manager
@@ -109,7 +112,6 @@ export default function SecondPage() {
                                 marginBottom: '10px',
                                 color: '#555',
                                 fontSize: '1.8em',
-                                fontStyle: 'italic',
                                 fontWeight: 'bold',
                             }}
                         >
@@ -119,7 +121,7 @@ export default function SecondPage() {
                             <div
                                 key={userIndex}
                                 style={{
-                                    position: 'relative',
+                                    position: 'relative', // phải để thế này để set up position cho button
                                     marginBottom: '15px',
                                     padding: '10px',
                                     border: '1px solid #ddd',
@@ -138,10 +140,42 @@ export default function SecondPage() {
                                     <strong>Created At:</strong> {user.createdAt}
                                 </p>
                                 {/* Remove account with -*/}
-                                <Button2
-                                    idleText="-"
-                                    onClick={() => removeAccount(siteName, user.username)}
-                                />
+                                <button
+                                className="deleteButton"
+                                style={{
+                                    position: 'absolute',
+                                    top: '0px',
+                                    right: '5px',
+                                    background: 'none',
+                                    border: 'none',
+                                    fontSize: '40px',
+                                    fontWeight: 'bold',
+                                    cursor: 'pointer',
+                                    color: 'red'
+                                }}
+                                onClick={() => removeAccount(siteName, user.username)}
+                                >
+                                    &times;
+                                </button>
+                                
+                                {/*Open user login page*/}
+                                <button
+                                    className="loginButton"
+                                    style={{
+                                        position: 'absolute',
+                                        bottom: '10px',
+                                        right: '5px',
+                                        background: 'none',
+                                        border: 'none',
+                                        fontSize: '25px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        color: '#007BFF'
+                                    }}
+                                    onClick={() => (window.location.href = '/login')}
+                                > 
+                                    ▶
+                                </button>
                             </div>
                         ))}
                     </div>

@@ -74,7 +74,6 @@ export function Button2({ idleText = "-", onClick, style = {}, className = "" })
       loadingText="Removing"
       successText="Removed"
       style={{
-        transform: 'translateY(-50%)', 
         width: '30px', 
         height: '30px', 
         fontSize: '20px', 

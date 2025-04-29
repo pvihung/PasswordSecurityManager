@@ -13,11 +13,14 @@ export default function MainPage() {
                     style={{
                         textAlign: 'center',
                         height: '30px',
-                        fontFamily: 'Myriad Pro',
+                        fontFamily: 'Inria Serif, serif',
                         fontWeight: 'bold',
-                        fontSize: '40px'}}
+                        fontSize: '35px',
+                        height: '45px',
+                        fontStyle: 'italic',
+                        fontFamily: 'Georgia',}}
                 >
-                PASSWORD MANAGER
+                Password Manager
                 </h1>
                 <div style={{
                     backgroundColor: '#f9f9f9',
@@ -92,7 +95,7 @@ export default function MainPage() {
                         textAlign: 'center'}}
                     >
                         {/* Close Button */}
-                        < Button2
+                        <button
                             className="close-button"
                             style={{
                                 position: 'absolute',
@@ -108,7 +111,7 @@ export default function MainPage() {
                             onClick={() => setIsPopupOpen(false)}
                         >
                             &times;
-                        </ Button2>
+                        </button>
 
                         {/*Window name, row*/}
                         <h2>Forgot Password</h2>
@@ -156,7 +159,7 @@ export default function MainPage() {
                                 onClick={() => setIsPopupOpen(false)}
                             >
                                 Submit
-                            </Button>
+                            </ Button>
                         </div>
                     </div>
                 </div>
