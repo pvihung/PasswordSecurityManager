@@ -1,34 +1,10 @@
-import Button from "../Buttons/Buttons.js";
+import Button,{Button2} from "../Buttons/Buttons.js";
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 
 export default function MainPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const navigate = useNavigate();
-    const verifyUser = async (e) => {
-        try {
-            console.log(username);
-            console.log(password);
-            const response = await fetch("http://localhost:8080/api/verifylogin", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify({username, password})
-            });
-            const userID = await response.text();
-
-            console.log(response.type);
-            console.log(response.ok);
-            console.log(response.status);
-            if (response.ok) {
-                navigate('/manager', {state: {data: userID}});
-            } else {
-                console.error(userID);
-            }
-        } catch (error) {
-            console.error("Something went wrong here: ", error);
-        }
-    };
 
     return (
         <>
@@ -37,11 +13,14 @@ export default function MainPage() {
                     style={{
                         textAlign: 'center',
                         height: '30px',
-                        fontFamily: 'Myriad Pro',
+                        fontFamily: 'Inria Serif, serif',
                         fontWeight: 'bold',
-                        fontSize: '40px'}}
+                        fontSize: '35px',
+                        height: '45px',
+                        fontStyle: 'italic',
+                        fontFamily: 'Georgia',}}
                 >
-                PASSWORD MANAGER
+                Password Manager
                 </h1>
                 <div style={{
                     backgroundColor: '#f9f9f9',
@@ -83,12 +62,109 @@ export default function MainPage() {
                         gap: '20px',
                         marginTop: '20px'}}
                     >
-                      <Button idleText="Login" onClick={verifyUser}/>
+                      <Button idleText="Login" />
                       <Button idleText="Forgot Password?" />
-                      <Button idleText="Create New Account" />
                     </div>
                 </div>
             </div>
+
+            {/* Popup Window */}
+            {isPopupOpen && (
+                <div style={{
+                    position: 'fixed',
+                    top: '0',
+                    left: '0',
+                    width: '100%',
+                    height: '100%',
+                    backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                    display: 'flex',
+                    justifyContent: 'center',
+                    alignItems: 'center'}}
+                >
+                    {/* Inside Popup Window*/}
+                    <div 
+                    style={{
+                        position: 'relative',
+                        backgroundColor: '#fff',
+                        padding: '20px',
+                        borderRadius: '10px',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                        fontFamily: 'Georgia',
+                        fontSize: '16px',
+                        maxWidth: '500px',
+                        width: '100%',
+                        textAlign: 'center'}}
+                    >
+                        {/* Close Button */}
+                        <button
+                            className="close-button"
+                            style={{
+                                position: 'absolute',
+                                top: '0px',
+                                right: '5px',
+                                background: 'none',
+                                border: 'none',
+                                fontSize: '40px',
+                                fontWeight: 'bold',
+                                cursor: 'pointer',
+                                color: 'red'
+                            }}
+                            onClick={() => setIsPopupOpen(false)}
+                        >
+                            &times;
+                        </button>
+
+                        {/*Window name, row*/}
+                        <h2>Forgot Password</h2>
+                        <p>Answer this question to verify yourself mf</p>
+                        <input
+                            type="text"
+                            placeholder="Your Security Question"
+                            style={{
+                                padding: '10px',
+                                margin: '10px 0',
+                                borderRadius: '8px',
+                                border: '1px solid #ccc',
+                                width: '100%'}}
+                        />
+                        <input
+                            type="text"
+                            placeholder="Your Answer"
+                            style={{
+                                padding: '10px',
+                                margin: '10px 0',
+                                borderRadius: '8px',
+                                border: '1px solid #ccc',
+                                width: '100%'}}
+                        />
+                        <input
+                            type="email"
+                            placeholder="Your Email"
+                            style={{
+                                padding: '10px',
+                                margin: '10px 0',
+                                borderRadius: '8px',
+                                border: '1px solid #ccc',
+                                width: '100%'}}
+                        />
+                        <div style={{ marginTop: '10px' }}>
+                            < Button
+                                style={{
+                                    padding: '10px 20px',
+                                    borderRadius: '8px',
+                                    border: 'none',
+                                    backgroundColor: '#007BFF',
+                                    color: '#fff',
+                                    cursor: 'pointer',
+                                    marginRight: '10px'}}
+                                onClick={() => setIsPopupOpen(false)}
+                            >
+                                Submit
+                            </ Button>
+                        </div>
+                    </div>
+                </div>
+            )}
         </>
     );
 }
