@@ -93,14 +93,14 @@ return (
               marginBottom: '30px',
               fontSize: '2.5em',
               fontWeight: 'bold',
-              fontFamily: 'Inria Serif, serif',
+              fontFamily: 'Georgia, serif',
               fontStyle: 'italic',
           }}
       >
           Password Manager
       </h1>
 
-      {/* Accounts grid */}
+      {/* Use to sum of columns + Set up for scroll bar */}
       <div
           style={{
               display: 'grid',
@@ -131,7 +131,6 @@ return (
                           color: '#555',
                           fontSize: '1.8em',
                           fontFamily: 'Inria Serif, serif',
-                          fontStyle: 'italic',
                           fontWeight: 'bold',
                           textAlign: 'left',
                       }}
@@ -215,7 +214,9 @@ return (
               style={{
                   padding: '20px',
                   textAlign: 'center',
-                  fontFamily: 'Inria Serif, serif',
+                  fontFamily: 'Georgia, serif',
+                  fontStyle: 'italic',
+                  fontWeight: 'bold',
               }}
           >
               <h2>Add New Account</h2>
@@ -252,20 +253,22 @@ return (
 
               {/* Close button */}
               <button
-                  style={{
-                      marginTop: '20px',
-                      padding: '10px 20px',
-                      borderRadius: '8px',
+                className="close-button"
+                style={{
+                      position: 'absolute',
+                      top: '0px',
+                      right: '10px',
+                      background: 'none',
                       border: 'none',
-                      backgroundColor: 'red',
-                      color: '#fff',
+                      fontSize: '40px',
+                      fontWeight: 'bold',
                       cursor: 'pointer',
-                      fontSize: '16px',
+                      color: 'red',
                   }}
-                  onClick={() => setIsPopupOpen(false)} 
-              >
-                  Close
-              </button>
+                      onClick={() => setIsPopupOpen(false)}
+                  >
+                    &times;
+                  </button>
           </div>
       </Popup>
 
