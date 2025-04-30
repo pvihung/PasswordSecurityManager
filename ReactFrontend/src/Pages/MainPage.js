@@ -1,10 +1,35 @@
 import Button from "../Buttons/Buttons.js";
 import { useState } from 'react';
+import {useNavigate} from 'react-router-dom';
 
 export default function MainPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
-    const [isPopupOpen, setIsPopupOpen] = useState(false); 
+    const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const navigate = useNavigate();
+    const verifyUser = async (e) => {
+        try {
+            console.log(username);
+            console.log(password);
+            const response = await fetch("http://localhost:8080/api/verifylogin", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify({username, password})
+            });
+            const validation = await response.text();
+            console.log(response.type);
+            console.log(response.ok);
+            console.log(response.status);
+            if (response.ok) {
+                console.log(validation);
+                navigate('/manager');
+            } else {
+                console.error(validation);
+            }
+        } catch (error) {
+            console.error("Something went wrong here: ", error);
+        }
+    }
 
     return (
         <>
@@ -53,7 +78,7 @@ export default function MainPage() {
                         onChange={(event) => setUsername(event.target.value)}
                         required
                     />
-                    {/* Password Input */}  
+                    {/* Password Input */}
                     <input
                         type="password"
                         placeholder="Your Password"
@@ -78,7 +103,7 @@ export default function MainPage() {
                             marginTop: '20px',
                         }}
                     >
-                        <Button idleText="Login" />
+                        <Button idleText="Login" onClick={verifyUser}/>
                         <Button idleText="Forgot Password?" onClick={() => setIsPopupOpen(true)} />
                     </div>
                 </div>

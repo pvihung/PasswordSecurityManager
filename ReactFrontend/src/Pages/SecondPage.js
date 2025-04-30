@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, {useState, useEffect} from 'react';
 import Button from '../Buttons/Buttons';
 import Popup from 'reactjs-popup';
 import './SecondPage.css';
@@ -10,35 +10,59 @@ export default function SecondPage() {
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
     const [confirmPassword, setConfirmPassword] = useState('');
-    
-    const [accounts, setAccounts] = useState([
-      { siteName: 'Google', username: 'Andrew', password: 'sfsafna', createdAt: '2025-04-20' },
-        { siteName: 'Google', username: 'Sarah', password: 'sfsafna', createdAt: '2025-04-20' },
-        { siteName: 'Google', username: 'David', password: 'sfsafna', createdAt: '2025-04-20' },
-        { siteName: 'Facebook', username: 'John', password: 'pass123', createdAt: '2025-04-19' },
-        { siteName: 'Facebook', username: 'Mike', password: 'pass123', createdAt: '2025-04-19' },
-        { siteName: 'Facebook', username: 'Justin', password: 'pass456', createdAt: '2025-04-19' },
-        { siteName: 'Twitter', username: 'Jane', password: 'mypassword', createdAt: '2025-04-18' },
-        { siteName: 'Twitter', username: 'Emily', password: 'mypassword', createdAt: '2025-04-18' },
-        { siteName: 'Twitter', username: 'Tony', password: 'mypassword789', createdAt: '2025-04-18' },
-        { siteName: 'LinkedIn', username: 'Alice', password: 'alice123', createdAt: '2025-04-17' },
-        { siteName: 'LinkedIn', username: 'Bob', password: 'bob123', createdAt: '2025-04-17' },
-        { siteName: 'LinkedIn', username: 'Charlie', password: 'charlie123', createdAt: '2025-04-17' },
-        { siteName: 'Instagram', username: 'Sophia', password: 'sophia123', createdAt: '2025-04-16' },
-        { siteName: 'Instagram', username: 'Liam', password: 'liam123', createdAt: '2025-04-16' },
-        { siteName: 'Reddit', username: 'Emma', password: 'reddit123', createdAt: '2025-04-15' },
-        { siteName: 'Reddit', username: 'Noah', password: 'reddit456', createdAt: '2025-04-15' },
-        { siteName: 'Pinterest', username: 'Olivia', password: 'pinterest123', createdAt: '2025-04-14' },
-        { siteName: 'Pinterest', username: 'James', password: 'pinterest456', createdAt: '2025-04-14' },
-        { siteName: 'Snapchat', username: 'Ava', password: 'snapchat123', createdAt: '2025-04-13' },
-        { siteName: 'Bank of America', username: 'William', password: 'bank123', createdAt: '2025-04-12' },
-        { siteName: 'Bank of America', username: 'Mia', password: 'bank456', createdAt: '2025-04-12' },
-        { siteName: 'Chase', username: 'Lucas', password: 'chase123', createdAt: '2025-04-11' },
-        { siteName: 'Cornhub', username: 'Sophia', password: 'corn123', createdAt: '2025-04-10' },
-        { siteName: 'Cornhub', username: 'Liam', password: 'corn456', createdAt: '2025-04-10' },
-        { siteName: 'MySJSU', username: 'Emma', password: 'sjsu123', createdAt: '2025-04-09' },
-        { siteName: 'League of Legends', username: 'Noah', password: 'lol123', createdAt: '2025-04-08' }
-    ]);
+    const [accounts, setAccounts] = useState([]);
+    const location = useLocation();
+    const receivedID = location.state?.data;
+    console.log(receivedID);
+
+    useEffect(() => {
+        async function loadAccounts() {
+            try {
+                const accountsFetch = await fetch(`http://localhost:8080/api/vault/${receivedID}`, {
+                    method: 'GET'
+                });
+                console.log(accountsFetch);
+                if (!accountsFetch.ok) {
+                    console.error("Accounts fetch failed");
+                } else {
+                    const accountsData = await accountsFetch.json();
+                    setAccounts(accountsData);
+                    console.log(accounts);
+                }
+            } catch (error) {
+                console.error("Accounts fetch failed: ", error);
+            }
+        };
+        loadAccounts();
+    }, []);
+//    const accounts = [
+//        { siteName: 'Google', username: 'Andrew', password: 'sfsafna', createdAt: '2025-04-20' },
+//        { siteName: 'Google', username: 'Sarah', password: 'sfsafna', createdAt: '2025-04-20' },
+//        { siteName: 'Google', username: 'David', password: 'sfsafna', createdAt: '2025-04-20' },
+//        { siteName: 'Facebook', username: 'John', password: 'pass123', createdAt: '2025-04-19' },
+//        { siteName: 'Facebook', username: 'Mike', password: 'pass123', createdAt: '2025-04-19' },
+//        { siteName: 'Facebook', username: 'Justin', password: 'pass456', createdAt: '2025-04-19' },
+//        { siteName: 'Twitter', username: 'Jane', password: 'mypassword', createdAt: '2025-04-18' },
+//        { siteName: 'Twitter', username: 'Emily', password: 'mypassword', createdAt: '2025-04-18' },
+//        { siteName: 'Twitter', username: 'Tony', password: 'mypassword789', createdAt: '2025-04-18' },
+//        { siteName: 'LinkedIn', username: 'Alice', password: 'alice123', createdAt: '2025-04-17' },
+//        { siteName: 'LinkedIn', username: 'Bob', password: 'bob123', createdAt: '2025-04-17' },
+//        { siteName: 'LinkedIn', username: 'Charlie', password: 'charlie123', createdAt: '2025-04-17' },
+//        { siteName: 'Instagram', username: 'Sophia', password: 'sophia123', createdAt: '2025-04-16' },
+//        { siteName: 'Instagram', username: 'Liam', password: 'liam123', createdAt: '2025-04-16' },
+//        { siteName: 'Reddit', username: 'Emma', password: 'reddit123', createdAt: '2025-04-15' },
+//        { siteName: 'Reddit', username: 'Noah', password: 'reddit456', createdAt: '2025-04-15' },
+//        { siteName: 'Pinterest', username: 'Olivia', password: 'pinterest123', createdAt: '2025-04-14' },
+//        { siteName: 'Pinterest', username: 'James', password: 'pinterest456', createdAt: '2025-04-14' },
+//        { siteName: 'Snapchat', username: 'Ava', password: 'snapchat123', createdAt: '2025-04-13' },
+//        { siteName: 'Bank of America', username: 'William', password: 'bank123', createdAt: '2025-04-12' },
+//        { siteName: 'Bank of America', username: 'Mia', password: 'bank456', createdAt: '2025-04-12' },
+//        { siteName: 'Chase', username: 'Lucas', password: 'chase123', createdAt: '2025-04-11' },
+//        { siteName: 'Cornhub', username: 'Sophia', password: 'corn123', createdAt: '2025-04-10' },
+//        { siteName: 'Cornhub', username: 'Liam', password: 'corn456', createdAt: '2025-04-10' },
+//        { siteName: 'MySJSU', username: 'Emma', password: 'sjsu123', createdAt: '2025-04-09' },
+//        { siteName: 'League of Legends', username: 'Noah', password: 'lol123', createdAt: '2025-04-08' }
+//    ];
 
     const sendAccountInfo = async () => {
         console.log(siteName, username, password, confirmPassword);
@@ -46,8 +70,8 @@ export default function SecondPage() {
             const postData = {appName: siteName, "username": username, "password": password};
             const response = await fetch("http://localhost:8080/api/vaultentry", {
                 method: 'POST',
-                headers: { 'Content-Type': 'application/json' },
-                body: JSON.stringify(postData),
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(postData)
             });
             const jsonData = await response.json();
             console.log("The vaultentry creation worked: ", jsonData);
@@ -55,15 +79,16 @@ export default function SecondPage() {
         } catch (exception) {
             console.error("It didn't work: ", exception.message);
         }
-      }
-      
-  const groupedAccounts = accounts.reduce((acc, account) => {
-    if (!acc[account.siteName]) {
-      acc[account.siteName] = [];
-    }
-    acc[account.siteName].push(account);
-    return acc;
-  }, {});
+    };
+
+    // Add the entered credentials into the accounts array
+    const groupedAccounts = accounts.reduce((acc, account) => {
+        if (!acc[account.appName]) {
+          acc[account.appName] = [];
+        }
+        acc[account.appName].push(account);
+        return acc;
+    }, {});
 
   const removeAccount = (siteName, username) => {
     const updatedAccounts = accounts.filter(
@@ -273,7 +298,10 @@ return (
       </Popup>
 
       {/* Button to open the popup */}
-      <Button idleText="Add New Account" onClick={() => setIsPopupOpen(true)} />
-  </div>
+      <Button
+        idleText="Add New Account"
+        onClick={() => setIsPopupOpen(true)}
+      />
+    </div>
   );
 }
