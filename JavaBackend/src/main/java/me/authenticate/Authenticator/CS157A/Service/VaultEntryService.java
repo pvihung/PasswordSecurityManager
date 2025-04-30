@@ -8,6 +8,7 @@ import me.authenticate.Authenticator.CS157A.Repository.UserRepo;
 import me.authenticate.Authenticator.CS157A.Repository.VaultEntryRepo;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @Service
@@ -30,7 +31,17 @@ public class VaultEntryService {
         return repo.findById(ID).orElse(null);
     }
 
-    public List<VaultEntry> retrieveVault(int ID) {
-        return repo.findByUserUserID(ID);
+    public List<VaultEntryDTO> retrieveVault(int ID) {
+        List<VaultEntryDTO> dtoList = new ArrayList<>();
+        List<VaultEntry> entries = repo.findByUserUserID(ID);
+        for (VaultEntry entry : entries) {
+            VaultEntryDTO dto = new VaultEntryDTO();
+            dto.setUserid(entry.getUser().getUserID());
+            dto.setAppName(entry.getAppName());
+            dto.setUsername(entry.getUsername());
+            dto.setPassword(entry.getPassword());
+            dtoList.add(dto);
+        }
+        return dtoList;
     }
 }

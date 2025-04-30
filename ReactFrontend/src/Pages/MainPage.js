@@ -1,6 +1,7 @@
 import Button from "../Buttons/Buttons.js";
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
+import "./SecondPage.css";
 
 export default function MainPage() {
     const [password, setPassword] = useState('');
@@ -16,15 +17,14 @@ export default function MainPage() {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({username, password})
             });
-            const validation = await response.text();
+            const userID = await response.text();
             console.log(response.type);
             console.log(response.ok);
             console.log(response.status);
             if (response.ok) {
-                console.log(validation);
-                navigate('/manager');
+                navigate('/manager', {state: {data: userID}});
             } else {
-                console.error(validation);
+                console.error(userID);
             }
         } catch (error) {
             console.error("Something went wrong here: ", error);
@@ -67,14 +67,7 @@ export default function MainPage() {
                     <input
                         type="text"
                         placeholder="Your Username"
-                        className="text-center"
-                        style={{
-                            padding: '10px',
-                            margin: '10px 0',
-                            borderRadius: '8px',
-                            border: '1px solid #ccc',
-                            width: '100%',
-                        }}
+                        className="inputBlock"
                         onChange={(event) => setUsername(event.target.value)}
                         required
                     />
@@ -82,14 +75,7 @@ export default function MainPage() {
                     <input
                         type="password"
                         placeholder="Your Password"
-                        className="text-center"
-                        style={{
-                            padding: '10px',
-                            margin: '10px 0',
-                            borderRadius: '8px',
-                            border: '1px solid #ccc',
-                            width: '100%',
-                        }}
+                        className="inputBlock"
                         onChange={(event) => setPassword(event.target.value)}
                     />
                     {/* Login Button and Forgot Password*/}
@@ -164,35 +150,17 @@ export default function MainPage() {
                         <input
                             type="text"
                             placeholder="Your Security Question"
-                            style={{
-                                padding: '10px',
-                                margin: '10px 0',
-                                borderRadius: '8px',
-                                border: '1px solid #ccc',
-                                width: '100%',
-                            }}
+                            className="inputBlock"
                         />
                         <input
                             type="text"
                             placeholder="Your Answer"
-                            style={{
-                                padding: '10px',
-                                margin: '10px 0',
-                                borderRadius: '8px',
-                                border: '1px solid #ccc',
-                                width: '100%',
-                            }}
+                            className="inputBlock"
                         />
                         <input
                             type="email"
                             placeholder="Your Email"
-                            style={{
-                                padding: '10px',
-                                margin: '10px 0',
-                                borderRadius: '8px',
-                                border: '1px solid #ccc',
-                                width: '100%',
-                            }}
+                            className="inputBlock"
                         />
                         <div style={{ marginTop: '10px' }}>
                             <Button

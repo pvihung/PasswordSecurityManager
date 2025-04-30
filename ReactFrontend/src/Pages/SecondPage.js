@@ -251,25 +251,25 @@ return (
               <input
                   type="text"
                   placeholder="Site Name"
-                  className="inputBlock"
+                  className="inputBlock2"
                   onChange={(event) => setSiteName(event.target.value)}
               />
               <input
                   type="text"
                   placeholder="Username"
-                  className="inputBlock"
+                  className="inputBlock2"
                   onChange={(event) => setUsername(event.target.value)}
               />
               <input
                   type="password"
                   placeholder="Password"
-                  className="inputBlock"
+                  className="inputBlock2"
                   onChange={(event) => setPassword(event.target.value)}
               />
               <input
                   type="password"
                   placeholder="Confirm Password"
-                  className="inputBlock"
+                  className="inputBlock2"
                   onChange={(event) => setConfirmPassword(event.target.value)}
               />
 

@@ -26,7 +26,7 @@ public class VaultEntryController {
     }
 
     @GetMapping("/vault/{ID}")
-    public List<VaultEntry> retrieveVault(@PathVariable int ID) {
+    public List<VaultEntryDTO> retrieveVault(@PathVariable int ID) {
         return service.retrieveVault(ID);
     }
 }
