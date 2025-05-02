@@ -2,7 +2,7 @@ package me.authenticate.Authenticator.CS157A.Controller;
 
 import lombok.RequiredArgsConstructor;
 import me.authenticate.Authenticator.CS157A.Entity.LoginDTO;
-import me.authenticate.Authenticator.CS157A.Entity.User;
+import me.authenticate.Authenticator.CS157A.Entity.UserDTO;
 import me.authenticate.Authenticator.CS157A.Service.UserService;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -16,7 +16,7 @@ public class UserController {
     private final UserService service;
 
     @PostMapping("/user")
-    public User saveUser(@RequestBody User u) {
+    public ResponseEntity<Void> saveUser(@RequestBody UserDTO u) {
         return service.saveUser(u);
     }
 

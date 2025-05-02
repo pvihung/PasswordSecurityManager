@@ -2,12 +2,18 @@ import Button from "../Buttons/Buttons.js";
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
 import "./SecondPage.css";
+import Popup from 'reactjs-popup';
 
 export default function MainPage() {
     const [password, setPassword] = useState('');
     const [username, setUsername] = useState('');
+    const [isForgotPopupOpen, setIsForgotPopupOpen] = useState(false);
     const [isPopupOpen, setIsPopupOpen] = useState(false);
+    const [newAccUser, setNewAccUser] = useState('');
+    const [newAccEmail, setNewAccEmail] = useState('');
+    const [newAccPass, setNewAccPass] = useState('');
     const navigate = useNavigate();
+
     const verifyUser = async (e) => {
         try {
             console.log(username);
@@ -28,6 +34,20 @@ export default function MainPage() {
             }
         } catch (error) {
             console.error("Something went wrong here: ", error);
+        }
+    }
+
+    const saveUserInfo = async () => {
+        try {
+            const postData = {username: newAccUser, masterPass: newAccPass, email: newAccEmail}
+            const response = await fetch("http://localhost:8080/api/user", {
+                method: 'POST',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(postData)
+            })
+            console.log(response);
+        } catch (error) {
+            console.error("New account not created: ", error);
         }
     }
 
@@ -90,13 +110,14 @@ export default function MainPage() {
                         }}
                     >
                         <Button idleText="Login" onClick={verifyUser}/>
-                        <Button idleText="Forgot Password?" onClick={() => setIsPopupOpen(true)} />
+                        <Button idleText="Forgot Password?" onClick={() => setIsForgotPopupOpen(true)} />
+                        <Button idleText="Create New Account"  onClick={() => setIsPopupOpen(true)}/>
                     </div>
                 </div>
             </div>
 
-            {/* Popup Window */}
-            {isPopupOpen && (
+            {/* Forgot Password Popup Window */}
+            {isForgotPopupOpen && (
                 <div
                     style={{
                         position: 'fixed',
@@ -139,7 +160,7 @@ export default function MainPage() {
                                 cursor: 'pointer',
                                 color: 'red',
                             }}
-                            onClick={() => setIsPopupOpen(false)}
+                            onClick={() => setIsForgotPopupOpen(false)}
                         >
                             &times;
                         </button>
@@ -173,7 +194,7 @@ export default function MainPage() {
                                     cursor: 'pointer',
                                     marginRight: '10px',
                                 }}
-                                onClick={() => setIsPopupOpen(false)}
+                                onClick={() => setIsForgotPopupOpen(false)}
                             >
                                 Submit
                             </Button>
@@ -181,6 +202,87 @@ export default function MainPage() {
                     </div>
                 </div>
             )}
+
+            {/* Create Account Popup Window */}
+            <Popup
+                open={isPopupOpen}
+                onClose={() => setIsPopupOpen(false)} // Close the popup
+                modal
+                overlayStyle={{
+                    background: 'rgba(0, 0, 0, 0.5)', // Dimmed background
+                }}
+                contentStyle={{
+                    background: '#fff',
+                    borderRadius: '10px',
+                    padding: '20px',
+                    width: '50%',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                    maxWidth: '600px',
+                    margin: 'auto',
+                }}
+            >
+                    {/* Popup content */}
+                <div
+                    style={{
+                        padding: '20px',
+                        textAlign: 'center',
+                        fontFamily: 'Georgia, serif',
+                        fontStyle: 'italic',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    <h2>Add New Account</h2>
+                    <p>Please enter your new account here.</p>
+
+                            {/* Input fields */}
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        className="inputBlock2"
+                        onChange={(event) => setNewAccUser(event.target.value)}
+                    />
+                    <input
+                        type="email"
+                        placeholder="Email"
+                        className="inputBlock2"
+                        onChange={(event) => setNewAccEmail(event.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="inputBlock2"
+                        onChange={(event) => setNewAccPass(event.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="inputBlock2"
+                        //onChange={(event) => setConfirmPassword(event.target.value)}
+                    />
+
+                            {/* Save account button */}
+                    <Button idleText="Save Account" onClick={saveUserInfo} />
+
+                            {/* Close button */}
+                    <button
+                        className="close-button"
+                        style={{
+                            position: 'absolute',
+                            top: '0px',
+                            right: '10px',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '40px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            color: 'red',
+                        }}
+                        onClick={() => setIsPopupOpen(false)}
+                    >
+                        &times;
+                    </button>
+                </div>
+            </Popup>
         </>
     );
 }
