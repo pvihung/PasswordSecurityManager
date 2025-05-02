@@ -6,6 +6,7 @@ import me.authenticate.Authenticator.CS157A.Entity.VaultEntry;
 import me.authenticate.Authenticator.CS157A.Entity.VaultEntryDTO;
 import me.authenticate.Authenticator.CS157A.Repository.UserRepo;
 import me.authenticate.Authenticator.CS157A.Repository.VaultEntryRepo;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -30,11 +31,12 @@ public class VaultEntryService {
         return repo.save(ve);
     }
 
-//    public VaultEntry deleteEntry(VaultEntryDTO v) {
-//        VaultEntry deleted = repo.findByUserUserID(v.getUserid()).;
-//        repo.delete(deleted);
-//        return deleted;
-//    }
+    public ResponseEntity<Void> deleteEntry(VaultEntryDTO v) {
+        VaultEntry deleted =
+                repo.findByUserUserIDAndUsername(v.getUserid(), v.getUsername()).get();
+        repo.delete(deleted);
+        return ResponseEntity.noContent().build();
+    }
 
     public VaultEntry retrieveEntry(int ID) {
         return repo.findById(ID).orElse(null);
