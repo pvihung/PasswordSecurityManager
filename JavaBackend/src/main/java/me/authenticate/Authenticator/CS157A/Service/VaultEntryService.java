@@ -18,7 +18,10 @@ public class VaultEntryService {
     private final UserRepo userList;
 
     public VaultEntry addEntry(VaultEntryDTO v) {
-        User u = userList.findById(v.getUserid()).get();
+        User u = new User();
+        if (userList.findById(v.getUserid()).isPresent()) {
+            u = userList.findById(v.getUserid()).get();
+        }
         VaultEntry ve = new VaultEntry();
         ve.setAppName(v.getAppName());
         ve.setUsername(v.getUsername());
@@ -26,6 +29,12 @@ public class VaultEntryService {
         ve.setUser(u);
         return repo.save(ve);
     }
+
+//    public VaultEntry deleteEntry(VaultEntryDTO v) {
+//        VaultEntry deleted = repo.findByUserUserID(v.getUserid()).;
+//        repo.delete(deleted);
+//        return deleted;
+//    }
 
     public VaultEntry retrieveEntry(int ID) {
         return repo.findById(ID).orElse(null);

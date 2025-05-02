@@ -34,7 +34,7 @@ export default function SecondPage() {
             }
         };
         loadAccounts();
-    }, []);
+    }, [receivedID]);
 //    const accounts = [
 //        { siteName: 'Google', username: 'Andrew', password: 'sfsafna', createdAt: '2025-04-20' },
 //        { siteName: 'Google', username: 'Sarah', password: 'sfsafna', createdAt: '2025-04-20' },
@@ -67,7 +67,7 @@ export default function SecondPage() {
     const sendAccountInfo = async () => {
         console.log(siteName, username, password, confirmPassword);
         try {
-            const postData = {appName: siteName, "username": username, "password": password};
+            const postData = {userid: receivedID, appName: siteName, "username": username, "password": password};
             const response = await fetch("http://localhost:8080/api/vaultentry", {
                 method: 'POST',
                 headers: {'Content-Type': 'application/json'},
@@ -81,6 +81,21 @@ export default function SecondPage() {
         }
     };
 
+    const deleteAccountInfo = async (siteName, username) => {
+        try {
+            const deleteTarget = {userid: receivedID, appName: siteName, "username": username};
+            const response = await fetch("http://localhost:8080/api/vaultentry", {
+                method: 'DELETE',
+                headers: {'Content-Type': 'application/json'},
+                body: JSON.stringify(deleteTarget)
+            });
+            const jsonData = await response.json();
+            console.log("Delete worked: ", jsonData);
+        } catch (exception) {
+            console.error("Delete failed because: ", exception.message);
+        }
+    }
+
     // Add the entered credentials into the accounts array
     const groupedAccounts = accounts.reduce((acc, account) => {
         if (!acc[account.appName]) {
@@ -90,218 +105,220 @@ export default function SecondPage() {
         return acc;
     }, {});
 
-  const removeAccount = (siteName, username) => {
-    const updatedAccounts = accounts.filter(
-        (account) => !(account.siteName === siteName && account.username === username)
-    );
-    setAccounts(updatedAccounts);
-    console.log(`Removed account for ${username} on ${siteName}`);
-};
+    const removeAccount = (siteName, username) => {
+        console.log(siteName, username);
+        deleteAccountInfo(siteName, username);
+        const updatedAccounts = accounts.filter(
+            (account) => !(account.appName === siteName && account.username === username)
+        );
+        setAccounts(updatedAccounts);
+        console.log(`Removed account for ${username} on ${siteName}`);
+    };
 
-return (
-  <div
-      style={{
-          padding: '100px',
-          backgroundColor: '#f6f6f6',
-          minHeight: '200vh',
-          maxHeight: '200vh',
-          overflowY: 'auto',
-          fontFamily: 'Inria Serif, serif',
-          color: '#333',
-      }}
-  >
-      {/* Title of the page */}
-      <h1
-          style={{
-              textAlign: 'center',
-              color: '#333',
-              marginBottom: '30px',
-              fontSize: '2.5em',
-              fontWeight: 'bold',
-              fontFamily: 'Georgia, serif',
-              fontStyle: 'italic',
-          }}
-      >
-          Password Manager
-      </h1>
-
-      {/* Use to sum of columns + Set up for scroll bar */}
-      <div
-          style={{
-              display: 'grid',
-              gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
-              gap: '20px',
-              overflowY: 'auto',
-              whiteSpace: 'nowrap',
-          }}
-      >
-          {/* Map through the grouped accounts and display them */}
-          {Object.entries(groupedAccounts).map(([siteName, users], index) => (
-              <div
-                  key={index}
-                  style={{
-                      backgroundColor: '#fff',
-                      border: '1px solid #eaeaea',
-                      borderRadius: '10px',
-                      padding: '20px',
-                      boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
-                  }}
-              >
-                  {/* Display site name */}
-                  <h2
-                      style={{
-                          borderBottom: '2.2px solid #eaeaea',
-                          paddingBottom: '5px',
-                          marginBottom: '10px',
-                          color: '#555',
-                          fontSize: '1.8em',
-                          fontFamily: 'Inria Serif, serif',
-                          fontWeight: 'bold',
-                          textAlign: 'left',
-                      }}
-                  >
-                      {siteName}
-                  </h2>
-
-                  {/* Display users for the site */}
-                  {users.map((user, userIndex) => (
-                      <div
-                          key={userIndex}
-                          style={{
-                              marginBottom: '15px',
-                              padding: '10px',
-                              border: '1px solid #ddd',
-                              borderRadius: '5px',
-                              backgroundColor: '#f9f9f9',
-                              fontSize: '1.05em',
-                              position: 'relative',
-                          }}
-                      >
-                          {/* Display username */}
-                          <p style={{ margin: '0 0 5px', color: '#666' }}>
-                              <strong>Username:</strong> {user.username}
-                          </p>
-
-                          {/* Display password */}
-                          <p style={{ margin: '0 0 5px', color: '#666' }}>
-                              <strong>Password:</strong> {user.password}
-                          </p>
-
-                          {/* Display creation date */}
-                          <p style={{ margin: '0 0 5px', color: '#666' }}>
-                              <strong>Created At:</strong> {user.createdAt}
-                          </p>
-
-                          {/* Delete account button */}
-                          <button
-                              className="deleteButton"
-                              style={{
-                                  position: 'absolute',
-                                  top: '0px',
-                                  right: '5px',
-                                  background: 'none',
-                                  border: 'none',
-                                  fontSize: '40px',
-                                  fontWeight: 'bold',
-                                  cursor: 'pointer',
-                                  color: 'red',
-                              }}
-                              onClick={() => removeAccount(siteName, user.username)}
-                          >
-                              &times;
-                          </button>
-                      </div>
-                  ))}
-              </div>
-          ))}
-      </div>
-
-      {/* Popup for adding a new account */}
-      <Popup
-          open={isPopupOpen}
-          onClose={() => setIsPopupOpen(false)} // Close the popup
-          modal
-          overlayStyle={{
-              background: 'rgba(0, 0, 0, 0.5)', // Dimmed background
-          }}
-          contentStyle={{
-              background: '#fff',
-              borderRadius: '10px',
-              padding: '20px',
-              width: '50%',
-              boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-              maxWidth: '600px',
-              margin: 'auto',
-          }}
-      >
-          {/* Popup content */}
-          <div
-              style={{
-                  padding: '20px',
-                  textAlign: 'center',
-                  fontFamily: 'Georgia, serif',
-                  fontStyle: 'italic',
-                  fontWeight: 'bold',
-              }}
-          >
-              <h2>Add New Account</h2>
-              <p>Please enter your new account here.</p>
-
-              {/* Input fields */}
-              <input
-                  type="text"
-                  placeholder="Site Name"
-                  className="inputBlock2"
-                  onChange={(event) => setSiteName(event.target.value)}
-              />
-              <input
-                  type="text"
-                  placeholder="Username"
-                  className="inputBlock2"
-                  onChange={(event) => setUsername(event.target.value)}
-              />
-              <input
-                  type="password"
-                  placeholder="Password"
-                  className="inputBlock2"
-                  onChange={(event) => setPassword(event.target.value)}
-              />
-              <input
-                  type="password"
-                  placeholder="Confirm Password"
-                  className="inputBlock2"
-                  onChange={(event) => setConfirmPassword(event.target.value)}
-              />
-
-              {/* Save account button */}
-              <Button idleText="Save Account" onClick={sendAccountInfo} />
-
-              {/* Close button */}
-              <button
-                className="close-button"
+    return (
+        <div
+            style={{
+                padding: '100px',
+                backgroundColor: '#f6f6f6',
+                minHeight: '200vh',
+                maxHeight: '200vh',
+                overflowY: 'auto',
+                fontFamily: 'Inria Serif, serif',
+                color: '#333',
+            }}
+        >
+            {/* Title of the page */}
+            <h1
                 style={{
-                      position: 'absolute',
-                      top: '0px',
-                      right: '10px',
-                      background: 'none',
-                      border: 'none',
-                      fontSize: '40px',
-                      fontWeight: 'bold',
-                      cursor: 'pointer',
-                      color: 'red',
-                  }}
-                      onClick={() => setIsPopupOpen(false)}
-                  >
-                    &times;
-                  </button>
-          </div>
-      </Popup>
+                    textAlign: 'center',
+                    color: '#333',
+                    marginBottom: '30px',
+                    fontSize: '2.5em',
+                    fontWeight: 'bold',
+                    fontFamily: 'Georgia, serif',
+                    fontStyle: 'italic',
+                }}
+            >
+                  Password Manager
+            </h1>
 
-      {/* Button to open the popup */}
-      <Button
-        idleText="Add New Account"
-        onClick={() => setIsPopupOpen(true)}
-      />
-    </div>
-  );
+                {/* Use to sum of columns + Set up for scroll bar */}
+            <div
+                style={{
+                    display: 'grid',
+                    gridTemplateColumns: 'repeat(auto-fit, minmax(300px, 1fr))',
+                    gap: '20px',
+                    overflowY: 'auto',
+                    whiteSpace: 'nowrap',
+                }}
+            >
+                {/* Map through the grouped accounts and display them */}
+                {Object.entries(groupedAccounts).map(([siteName, users], index) => (
+                    <div
+                        key={index}
+                        style={{
+                            backgroundColor: '#fff',
+                            border: '1px solid #eaeaea',
+                            borderRadius: '10px',
+                            padding: '20px',
+                            boxShadow: '0 4px 8px rgba(0,0,0,0.1)',
+                        }}
+                    >
+                        {/* Display site name */}
+                        <h2
+                            style={{
+                                borderBottom: '2.2px solid #eaeaea',
+                                paddingBottom: '5px',
+                                marginBottom: '10px',
+                                color: '#555',
+                                fontSize: '1.8em',
+                                fontFamily: 'Inria Serif, serif',
+                                fontWeight: 'bold',
+                                textAlign: 'left',
+                            }}
+                        >
+                            {siteName}
+                        </h2>
+
+                        {/* Display users for the site */}
+                        {users.map((user, userIndex) => (
+                            <div
+                                key={userIndex}
+                                style={{
+                                    marginBottom: '15px',
+                                    padding: '10px',
+                                    border: '1px solid #ddd',
+                                    borderRadius: '5px',
+                                    backgroundColor: '#f9f9f9',
+                                    fontSize: '1.05em',
+                                    position: 'relative',
+                                }}
+                            >
+                                {/* Display username */}
+                                <p style={{ margin: '0 0 5px', color: '#666' }}>
+                                    <strong>Username:</strong> {user.username}
+                                </p>
+
+                                {/* Display password */}
+                                <p style={{ margin: '0 0 5px', color: '#666' }}>
+                                    <strong>Password:</strong> {user.password}
+                                </p>
+
+                                {/* Display creation date */}
+                                <p style={{ margin: '0 0 5px', color: '#666' }}>
+                                    <strong>Created At:</strong> {user.createdAt}
+                                </p>
+
+                                {/* Delete account button */}
+                                <button
+                                    className="deleteButton"
+                                    style={{
+                                        position: 'absolute',
+                                        top: '0px',
+                                        right: '5px',
+                                        background: 'none',
+                                        border: 'none',
+                                        fontSize: '40px',
+                                        fontWeight: 'bold',
+                                        cursor: 'pointer',
+                                        color: 'red',
+                                    }}
+                                    onClick={() => removeAccount(user.appName, user.username)}
+                                >
+                                    &times;
+                                </button>
+                            </div>
+                        ))}
+                    </div>
+                ))}
+            </div>
+
+            {/* Popup for adding a new account */}
+            <Popup
+                open={isPopupOpen}
+                onClose={() => setIsPopupOpen(false)} // Close the popup
+                modal
+                overlayStyle={{
+                    background: 'rgba(0, 0, 0, 0.5)', // Dimmed background
+                }}
+                contentStyle={{
+                    background: '#fff',
+                    borderRadius: '10px',
+                    padding: '20px',
+                    width: '50%',
+                    boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                    maxWidth: '600px',
+                    margin: 'auto',
+                }}
+            >
+                {/* Popup content */}
+                <div
+                    style={{
+                        padding: '20px',
+                        textAlign: 'center',
+                        fontFamily: 'Georgia, serif',
+                        fontStyle: 'italic',
+                        fontWeight: 'bold',
+                    }}
+                >
+                    <h2>Add New Account</h2>
+                    <p>Please enter your new account here.</p>
+
+                    {/* Input fields */}
+                    <input
+                        type="text"
+                        placeholder="Site Name"
+                        className="inputBlock2"
+                        onChange={(event) => setSiteName(event.target.value)}
+                    />
+                    <input
+                        type="text"
+                        placeholder="Username"
+                        className="inputBlock2"
+                        onChange={(event) => setUsername(event.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Password"
+                        className="inputBlock2"
+                        onChange={(event) => setPassword(event.target.value)}
+                    />
+                    <input
+                        type="password"
+                        placeholder="Confirm Password"
+                        className="inputBlock2"
+                        onChange={(event) => setConfirmPassword(event.target.value)}
+                    />
+
+                    {/* Save account button */}
+                    <Button idleText="Save Account" onClick={sendAccountInfo} />
+
+                    {/* Close button */}
+                    <button
+                        className="close-button"
+                        style={{
+                            position: 'absolute',
+                            top: '0px',
+                            right: '10px',
+                            background: 'none',
+                            border: 'none',
+                            fontSize: '40px',
+                            fontWeight: 'bold',
+                            cursor: 'pointer',
+                            color: 'red',
+                        }}
+                          onClick={() => setIsPopupOpen(false)}
+                    >
+                        &times;
+                    </button>
+                </div>
+            </Popup>
+
+            {/* Button to open the popup */}
+            <Button
+                idleText="Add New Account"
+                onClick={() => setIsPopupOpen(true)}
+            />
+        </div>
+    );
 }
