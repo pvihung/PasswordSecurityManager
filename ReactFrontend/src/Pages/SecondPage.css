@@ -1,7 +1,16 @@
-.inputBlock {
+.inputBlock2 {
     padding: 10px;
     margin: 5px 0;
-    borderRadius: 8px;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    text-align: center;
+}
+
+.inputBlock {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
     border: 1px solid #ccc;
     width: 100%;
     text-align: center;
