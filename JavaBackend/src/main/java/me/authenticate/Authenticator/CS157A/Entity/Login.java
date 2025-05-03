@@ -7,7 +7,6 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import lombok.Data;
-// import org.json.JSONObject;
 
 @Entity
 @Data
@@ -19,6 +18,4 @@ public class Login {
     private int userId;
     private LocalDateTime previousLogin;
     private String IPAdd;
-    //private JSONObject deviceInfo;
-
 }
