@@ -54,7 +54,7 @@ export default function MainPage() {
     return (
         <>
             {/* Page name */}
-            <div className="AddingAccount">
+            <div className="MiddlePageSetUp">
                 <h1
                     className="Title"
                     style={{
@@ -77,6 +77,8 @@ export default function MainPage() {
                         maxWidth: '500px',
                         margin: '0 auto',
                         fontFamily: 'Georgia',
+                        boxShadow: '0 4px 8px rgba(0, 0, 0, 0.1)',
+                        border: '1px solid #ddd',
                     }}
                 >
                     {/* Form Title */}
