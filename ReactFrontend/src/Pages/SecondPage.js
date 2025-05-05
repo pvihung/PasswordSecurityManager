@@ -2,15 +2,17 @@ import React, {useState, useEffect} from 'react';
 import Button from '../Buttons/Buttons';
 import Popup from 'reactjs-popup';
 import './PageClasses.css';
-import {useLocation} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 
 export default function SecondPage() {
     const [isPopupOpen, setIsPopupOpen] = useState(false);
     const [siteName, setSiteName] = useState('');
     const [username, setUsername] = useState('');
     const [password, setPassword] = useState('');
-    const [confirmPassword, setConfirmPassword] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const [passEqual, setPassEqual] = useState(true);
     const [accounts, setAccounts] = useState([]);
+    const navigate = useNavigate();
     const location = useLocation();
     const receivedID = location.state?.data;
     console.log(receivedID);
@@ -39,7 +41,7 @@ export default function SecondPage() {
 
     // Add new account details to the vault
     const sendAccountInfo = async () => {
-        console.log(siteName, username, password, confirmPassword);
+        console.log(siteName, username, password, confirmPass);
         try {
             const postData = {userid: receivedID, appName: siteName, "username": username, "password": password};
             const response = await fetch("http://localhost:8080/api/vaultentry", {
@@ -261,11 +263,15 @@ export default function SecondPage() {
                         type="password"
                         placeholder="Confirm Password"
                         className="inputBlock2"
-                        onChange={(event) => setConfirmPassword(event.target.value)}
+                        onChange={(event) => setConfirmPass(event.target.value)}
                     />
 
                     {/* Save account button */}
                     <Button idleText="Save Account" onClick={sendAccountInfo} />
+
+                    {!passEqual && (
+                        <p style={{color: 'red'}}><br />Passwords don't match</p>
+                    )}
 
                     {/* Close button */}
                     <button
@@ -292,6 +298,12 @@ export default function SecondPage() {
             <Button
                 idleText="Add New Account"
                 onClick={() => setIsPopupOpen(true)}
+            />
+
+            {/* Button to go to login history table */}
+            <Button
+                idleText="View Login History"
+                onClick={() => {navigate('/login', {state: {data: receivedID}});}}
             />
         </div>
     );

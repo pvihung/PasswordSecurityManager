@@ -27,7 +27,6 @@ export default function MainPage() {
                 body: JSON.stringify({username, password})
             });
             const userID = await response.text();
-            console.log(response.status);
             if (response.ok) {
                 navigate('/manager', {state: {data: userID}});
                 const ipRequest = await fetch('https://api.ipify.org');

@@ -6,6 +6,8 @@ import me.authenticate.Authenticator.CS157A.Service.LoginService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.List;
+
 @RestController
 @RequiredArgsConstructor
 @RequestMapping("/api")
@@ -15,9 +17,11 @@ public class LoginController {
 
     @PostMapping("/save-login")
     public ResponseEntity<Void> saveLogin(@RequestBody LoginDTO l) {
-        System.out.println(l.getIPAdd());
         return service.saveLogin(l);
     }
     
-    
+    @GetMapping("show-login/{ID}")
+    public List<LoginDTO> retrieveLogins(@PathVariable int ID) {
+        return service.retrieveLogins(ID);
+    }
 }
