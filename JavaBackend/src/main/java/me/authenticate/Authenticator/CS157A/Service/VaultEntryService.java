@@ -8,7 +8,6 @@ import me.authenticate.Authenticator.CS157A.Repository.UserRepo;
 import me.authenticate.Authenticator.CS157A.Repository.VaultEntryRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
-
 import java.util.ArrayList;
 import java.util.List;
 

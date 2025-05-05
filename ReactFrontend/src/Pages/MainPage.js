@@ -1,7 +1,7 @@
 import Button from "../Buttons/Buttons.js";
 import { useState } from 'react';
 import {useNavigate} from 'react-router-dom';
-import "./SecondPage.css";
+import "./PageClasses.css";
 import Popup from 'reactjs-popup';
 
 export default function MainPage() {
@@ -12,8 +12,11 @@ export default function MainPage() {
     const [newAccUser, setNewAccUser] = useState('');
     const [newAccEmail, setNewAccEmail] = useState('');
     const [newAccPass, setNewAccPass] = useState('');
+    const [confirmPass, setConfirmPass] = useState('');
+    const [passEqual, setPassEqual] = useState(true);
     const navigate = useNavigate();
 
+    // Make sure that the account exists; log in to account if it does
     const verifyUser = async (e) => {
         try {
             console.log(username);
@@ -24,11 +27,17 @@ export default function MainPage() {
                 body: JSON.stringify({username, password})
             });
             const userID = await response.text();
-            console.log(response.type);
-            console.log(response.ok);
             console.log(response.status);
             if (response.ok) {
                 navigate('/manager', {state: {data: userID}});
+                const ipRequest = await fetch('https://api.ipify.org');
+                const ip = await ipRequest.text();
+                console.log(ip);
+                const loginRequest = await fetch("http://localhost:8080/api/save-login", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({"userid": userID, "ipadd": ip})
+                })
             } else {
                 console.error(userID);
             }
@@ -37,17 +46,23 @@ export default function MainPage() {
         }
     }
 
+    // Save a new user account if the email and username are unique
     const saveUserInfo = async () => {
-        try {
-            const postData = {username: newAccUser, masterPass: newAccPass, email: newAccEmail}
-            const response = await fetch("http://localhost:8080/api/user", {
-                method: 'POST',
-                headers: {'Content-Type': 'application/json'},
-                body: JSON.stringify(postData)
-            })
-            console.log(response);
-        } catch (error) {
-            console.error("New account not created: ", error);
+        if (newAccPass === confirmPass) {
+            setPassEqual(true);
+            try {
+                const postData = {username: newAccUser, masterPass: newAccPass, email: newAccEmail}
+                const response = await fetch("http://localhost:8080/api/user", {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify(postData)
+                })
+                console.log(response);
+            } catch (error) {
+                console.error("New account not created: ", error);
+            }
+        } else {
+            setPassEqual(false);
         }
     }
 
@@ -169,17 +184,7 @@ export default function MainPage() {
 
                         {/* Popup Content */}
                         <h2>Forgot Password</h2>
-                        <p>Answer this question to verify yourself:</p>
-                        <input
-                            type="text"
-                            placeholder="Your Security Question"
-                            className="inputBlock"
-                        />
-                        <input
-                            type="text"
-                            placeholder="Your Answer"
-                            className="inputBlock"
-                        />
+                        <p>Enter your email to receive a security code:</p>
                         <input
                             type="email"
                             placeholder="Your Email"
@@ -198,7 +203,6 @@ export default function MainPage() {
                                 }}
                                 onClick={() => setIsForgotPopupOpen(false)}
                             >
-                                Submit
                             </Button>
                         </div>
                     </div>
@@ -208,6 +212,7 @@ export default function MainPage() {
             {/* Create Account Popup Window */}
             <Popup
                 open={isPopupOpen}
+                closeOnDocumentClick={false}
                 onClose={() => setIsPopupOpen(false)} // Close the popup
                 modal
                 overlayStyle={{
@@ -259,11 +264,15 @@ export default function MainPage() {
                         type="password"
                         placeholder="Confirm Password"
                         className="inputBlock2"
-                        //onChange={(event) => setConfirmPassword(event.target.value)}
+                        onChange={(event) => setConfirmPass(event.target.value)}
                     />
 
                             {/* Save account button */}
                     <Button idleText="Save Account" onClick={saveUserInfo} />
+
+                    {!passEqual && (
+                        <p style={{color: 'red'}}><br />Passwords don't match</p>
+                    )}
 
                             {/* Close button */}
                     <button
@@ -279,7 +288,7 @@ export default function MainPage() {
                             cursor: 'pointer',
                             color: 'red',
                         }}
-                        onClick={() => setIsPopupOpen(false)}
+                        onClick={() => {setPassEqual(true); setIsPopupOpen(false)}}
                     >
                         &times;
                     </button>

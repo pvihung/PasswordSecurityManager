@@ -1,11 +1,7 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
 import java.time.LocalDateTime;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -15,7 +11,10 @@ public class Login {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int loginId;
-    private int userId;
-    private LocalDateTime previousLogin;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    private User user;
+    private LocalDateTime previousLogin = LocalDateTime.now();
     private String IPAdd;
 }

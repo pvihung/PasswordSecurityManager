@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import Button from '../Buttons/Buttons';
 import Popup from 'reactjs-popup';
-import './SecondPage.css';
+import './PageClasses.css';
 import {useLocation} from 'react-router-dom';
 
 export default function SecondPage() {
@@ -15,6 +15,7 @@ export default function SecondPage() {
     const receivedID = location.state?.data;
     console.log(receivedID);
 
+    // Grab the user's account data from database and store in array
     useEffect(() => {
         async function loadAccounts() {
             try {
@@ -36,6 +37,7 @@ export default function SecondPage() {
         loadAccounts();
     }, [receivedID]);
 
+    // Add new account details to the vault
     const sendAccountInfo = async () => {
         console.log(siteName, username, password, confirmPassword);
         try {
@@ -76,6 +78,7 @@ export default function SecondPage() {
         return acc;
     }, {});
 
+    // Remove a specified account from the accounts array
     const removeAccount = (siteName, username) => {
         console.log(siteName, username);
         deleteAccountInfo(siteName, username);

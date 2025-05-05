@@ -1,0 +1,35 @@
+.inputBlock2 {
+    padding: 10px;
+    margin: 5px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    text-align: center;
+}
+
+.inputBlock {
+    padding: 10px;
+    margin: 10px 0;
+    border-radius: 8px;
+    border: 1px solid #ccc;
+    width: 100%;
+    text-align: center;
+}
+
+  /*Set up style for the Columns headers*/
+.column-header {
+    background-color: #00b2f4;
+    color: black;
+    padding: 20px;
+    text-align: left;
+    font-family: Georgia;
+    border-right: 1.5px solid #fff;
+    border-bottom: 2px solid #ddd;
+}
+
+  /*Set up style for the Table cells*/
+.table-cell-style {
+        padding: 12px;
+        border-right: 1px solid #ddd; /*// Add right border to each cell*/
+
+}

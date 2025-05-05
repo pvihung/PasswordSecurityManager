@@ -17,7 +17,7 @@ public class VaultEntry {
     private String appName;
     private String username;
     private String password;
-    private LocalDateTime lastModified;
+    private LocalDateTime lastModified = LocalDateTime.now();
 
     public void encrypt() {
         StringBuilder encryptedPassword = new StringBuilder(password);

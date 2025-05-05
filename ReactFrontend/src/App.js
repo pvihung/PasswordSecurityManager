@@ -16,7 +16,7 @@ function App() {
                 <Route path='/manager' element={<SecondPage />} />
 
                 {/* Route for Login */}
-                <Route path='/login' element={< Login />} />
+                <Route path='/login' element={<Login />} />
 
                 {/* Catch-all route for ErrorPage */}
                 <Route path='*' element={<ErrorPage />} />

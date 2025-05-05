@@ -1,5 +1,5 @@
 import { useState, useEffect } from 'react';
-import "./SecondPage.css";
+import "./PageClasses.css";
 
 export default function LoginTable() {
     const [loginData, setLoginData] = useState([]);
@@ -7,24 +7,6 @@ export default function LoginTable() {
     useEffect(() => {
         fetchLoginData();
     }, []);
-
-    // Set up style for the Columns headers
-    const ColumnHeader = {
-        backgroundColor: '#00b2f4',
-        color: 'black',
-        padding: '20px',
-        textAlign: 'left',
-        fontFamily: 'Georgia',
-        borderRight: '1.5px solid #fff',
-        borderBottom: '2px solid #ddd',
-    };
-
-    // Set up style for the Table cells
-    const tableCellStyle = {
-        padding: '12px',
-        borderRight : '1px solid #ddd', // Add right border to each cell
-
-    };
 
     const fetchLoginData = async () => {
         try {
@@ -70,7 +52,7 @@ export default function LoginTable() {
                     fontFamily: 'San Serif',
                 }}
             >
-                {/* Table header for the login history */}
+                {/* Table for the login history */}
                 <table 
                     style={{
                         width: '100%',
@@ -80,25 +62,25 @@ export default function LoginTable() {
                         fontSize: '20px',
                     }}
                 >
-                    {/* Table header for the login history */}
+                    {/* Column headers for the login history */}
                     <thead>
                         <tr>
-                            <th style={ColumnHeader}>Login ID</th>
-                            <th style={ColumnHeader}>User ID</th>
-                            <th style={ColumnHeader}>Previous Login</th>
-                            <th style={ColumnHeader}>IP Address</th>
+                            <th className = "column-header">Login ID</th>
+                            <th className = "column-header">User ID</th>
+                            <th className = "column-header">Previous Login</th>
+                            <th className = "column-header">IP Address</th>
                         </tr>
                     </thead>
                     <tbody>
                         {/* This part needs to be change to match the data from the backend */}
                         {loginData.map((login) => (
                             <tr key={login.loginId}>
-                                <td style={tableCellStyle}>{login.loginId}</td>
-                                <td style={tableCellStyle}>{login.userId}</td>
-                                <td style={tableCellStyle}>
+                                <td className = "table-cell-style">{login.loginId}</td>
+                                <td className = "table-cell-style">{login.userId}</td>
+                                <td className = "table-cell-style">
                                     {login.previousLogin ? new Date(login.previousLogin).toLocaleString() : 'N/A'}
                                 </td>
-                                <td style={tableCellStyle}>{login.ipAdd || 'N/A'}</td>
+                                <td className = "table-cell-style">{login.ipAdd || 'N/A'}</td>
                             </tr>
                         ))}
                     </tbody>
