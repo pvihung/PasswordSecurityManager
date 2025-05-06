@@ -294,17 +294,19 @@ export default function SecondPage() {
                 </div>
             </Popup>
 
-            {/* Button to open the popup */}
-            <Button
-                idleText="Add New Account"
-                onClick={() => setIsPopupOpen(true)}
-            />
+            <div style={{display: 'flex', gap: '30px'}}>
+                {/* Button to open the popup */}
+                <Button
+                    idleText="Add New Account"
+                    onClick={() => setIsPopupOpen(true)}
+                />
 
-            {/* Button to go to login history table */}
-            <Button
-                idleText="View Login History"
-                onClick={() => {navigate('/login', {state: {data: receivedID}});}}
-            />
+                {/* Button to go to login history table */}
+                <Button
+                    idleText="View Login History"
+                    onClick={() => {navigate('/login', {state: {data: receivedID}});}}
+                />
+            </div>
         </div>
     );
 }
