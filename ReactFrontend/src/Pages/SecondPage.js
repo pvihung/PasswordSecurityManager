@@ -14,6 +14,7 @@ export default function SecondPage() {
     const [accounts, setAccounts] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
+    const [duplicateError, setDuplicateError] = useState(false);
     const receivedID = location.state?.data;
     console.log(receivedID);
 
@@ -41,6 +42,30 @@ export default function SecondPage() {
 
     // Add new account details to the vault
     const sendAccountInfo = async () => {
+        if (password !== confirmPass) {
+            setPassEqual(false);
+            // set timer to close the popup after 2 seconds
+            setTimeout(() => {
+                setPassEqual(true);
+            }, 2000);
+            return;
+        } else {
+            setPassEqual(true);
+        }
+
+        // Check for duplicate accounts
+        const existingAccounts = groupedAccounts[siteName] || [];
+        const isDuplicate = existingAccounts.some(account => account.username === username);
+    
+        if (isDuplicate) {
+            setDuplicateError(true);
+            setTimeout(() => {
+                setDuplicateError(false);
+                setIsPopupOpen(false);
+        }, 3000);
+            return;
+        }
+
         console.log(siteName, username, password, confirmPass);
         try {
             const postData = {userid: receivedID, appName: siteName, "username": username, "password": password};
@@ -274,12 +299,12 @@ export default function SecondPage() {
                         <p style={{color: 'red'}}><br />Passwords don't match</p>
                     )}
 
+                    {duplicateError && (
+                        <p style={{color: 'red'}}><br />Account already exists</p>
+                    )}
+
                     {/* Save account button */}
                     <Button idleText="Save Account" onClick={sendAccountInfo} />
-
-                    {!passEqual && (
-                        <p style={{color: 'red'}}><br />Passwords don't match</p>
-                    )}
 
                     {/* Close button */}
                     <button
