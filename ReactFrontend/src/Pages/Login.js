@@ -69,8 +69,7 @@ export default function LoginTable() {
                     {/* Column headers for the login history */}
                     <thead>
                         <tr>
-                            <th className = "column-header">Login ID</th>
-                            <th className = "column-header">User ID</th>
+                            <th className = "column-header">User Name</th>
                             <th className = "column-header">Previous Login</th>
                             <th className = "column-header">IP Address</th>
                         </tr>

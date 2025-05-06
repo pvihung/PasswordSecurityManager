@@ -14,7 +14,6 @@ export default function SecondPage() {
     const [accounts, setAccounts] = useState([]);
     const navigate = useNavigate();
     const location = useLocation();
-    const [passEqual, setPassEqual] = useState(true);
     const receivedID = location.state?.data;
     console.log(receivedID);
 
@@ -42,7 +41,7 @@ export default function SecondPage() {
 
     // Add new account details to the vault
     const sendAccountInfo = async () => {
-        console.log(siteName, username, password, confirmPassword);
+        console.log(siteName, username, password, confirmPass);
         try {
             const postData = {userid: receivedID, appName: siteName, "username": username, "password": password};
             const response = await fetch("http://localhost:8080/api/vaultentry", {
@@ -302,12 +301,29 @@ export default function SecondPage() {
                     </button>
                 </div>
             </Popup>
-
+            
             {/* Button to open the popup */}
             <Button
                 idleText="Add New Account"
                 onClick={() => setIsPopupOpen(true)}
             />
+                
+                
+            {/*Button leads to login page */}
+            <Button
+                idleText="Manage Your Account"
+                onClick={() => navigate('/Login')}
+                style={{
+                    marginTop: '20px',
+                    backgroundColor: '#007BFF',
+                    color: '#fff',
+                    padding: '10px 20px',
+                    borderRadius: '5px',
+                    fontSize: '1.2em',
+                    
+                }}
+            />
         </div>
+    
     );
 }

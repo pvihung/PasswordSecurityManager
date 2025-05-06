@@ -14,6 +14,10 @@ export default function MainPage() {
     const [newAccPass, setNewAccPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [passEqual, setPassEqual] = useState(true);
+    const [resetEmail, setResetEmail] = useState('');
+    const [validEmail, setValidEmail] = useState(true);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
+
     const navigate = useNavigate();
 
     // Make sure that the account exists; log in to account if it does
