@@ -14,7 +14,6 @@ export default function MainPage() {
     const [newAccPass, setNewAccPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [passEqual, setPassEqual] = useState(true);
-    const [showErrorPopup, setShowErrorPopup] = useState(false);
     const navigate = useNavigate();
 
     // Make sure that the account exists; log in to account if it does
@@ -28,7 +27,6 @@ export default function MainPage() {
                 body: JSON.stringify({username, password})
             });
             const userID = await response.text();
-            console.log(response.status);
             if (response.ok) {
                 navigate('/manager', {state: {data: userID}});
                 const ipRequest = await fetch('https://api.ipify.org');
@@ -70,6 +68,15 @@ export default function MainPage() {
             }
         } else {
             setPassEqual(false);
+        }
+    }
+
+    // Send a forgot password code for 2 factor authentication
+    const sendForgotEmail = async () => {
+        if (!(resetEmail.match(/^\S+@\S+\.\S+$/))) {
+            setValidEmail(false);
+        } else {
+
         }
     }
 
@@ -184,7 +191,7 @@ export default function MainPage() {
                                 cursor: 'pointer',
                                 color: 'red',
                             }}
-                            onClick={() => setIsForgotPopupOpen(false)}
+                            onClick={() => {setValidEmail(true); setIsForgotPopupOpen(false)}}
                         >
                             &times;
                         </button>
@@ -196,21 +203,13 @@ export default function MainPage() {
                             type="email"
                             placeholder="Your Email"
                             className="inputBlock"
+                            onChange={(event) => setResetEmail(event.target.value)}
                         />
                         <div style={{ marginTop: '10px' }}>
-                            <Button
-                                style={{
-                                    padding: '10px 20px',
-                                    borderRadius: '8px',
-                                    border: 'none',
-                                    backgroundColor: '#007BFF',
-                                    color: '#fff',
-                                    cursor: 'pointer',
-                                    marginRight: '10px',
-                                }}
-                                onClick={() => setIsForgotPopupOpen(false)}
-                            >
-                            </Button>
+                            <Button onClick={sendForgotEmail} />
+                            {!validEmail && (
+                                <p style={{color: 'red'}}><br />Invalid email</p>
+                            )}
                         </div>
                     </div>
                 </div>

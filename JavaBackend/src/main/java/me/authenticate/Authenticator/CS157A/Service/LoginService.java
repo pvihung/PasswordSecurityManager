@@ -8,6 +8,9 @@ import me.authenticate.Authenticator.CS157A.Repository.UserRepo;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+import java.util.List;
+
 @Service
 @RequiredArgsConstructor
 public class LoginService {
@@ -21,5 +24,18 @@ public class LoginService {
         repo.save(log);
         return ResponseEntity.noContent().build();
     }
-    
+
+    public List<LoginDTO> retrieveLogins(int ID) {
+        List<LoginDTO> dtoList = new ArrayList<>();
+        List<Login> logins = repo.findByUserUserID(ID);
+        for (Login login : logins) {
+            LoginDTO entry = new LoginDTO();
+            entry.setLoginId(login.getLoginId());
+            entry.setUserid(login.getUser().getUserID());
+            entry.setIPAdd(login.getIPAdd());
+            entry.setPreviousLogin(login.getPreviousLogin());
+            dtoList.add(entry);
+        }
+        return dtoList;
+    }
 }

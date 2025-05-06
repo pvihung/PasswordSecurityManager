@@ -1,8 +1,11 @@
 import { useState, useEffect } from 'react';
+import {useLocation} from 'react-router-dom';
 import "./PageClasses.css";
 
 export default function LoginTable() {
     const [loginData, setLoginData] = useState([]);
+    const location = useLocation();
+    const receivedID = location.state?.data;
 
     useEffect(() => {
         fetchLoginData();
@@ -10,13 +13,14 @@ export default function LoginTable() {
 
     const fetchLoginData = async () => {
         try {
-            const response = await fetch("http://localhost:8080/api/login", {
-                method: 'GET',
-                headers: {'Content-Type': 'application/json'},
+            const response = await fetch(`http://localhost:8080/api/show-login/${receivedID}`, {
+                method: 'GET'
             });
+            console.log(response);
             if (response.ok) {
-                const data = await response.json();
-                setLoginData(data);
+                const history = await response.json();
+                console.log(history);
+                setLoginData(history);
             } else {
                 console.error("Failed to fetch login data");
             }
@@ -76,11 +80,11 @@ export default function LoginTable() {
                         {loginData.map((login) => (
                             <tr key={login.loginId}>
                                 <td className = "table-cell-style">{login.loginId}</td>
-                                <td className = "table-cell-style">{login.userId}</td>
+                                <td className = "table-cell-style">{login.userid}</td>
                                 <td className = "table-cell-style">
-                                    {login.previousLogin ? new Date(login.previousLogin).toLocaleString() : 'N/A'}
+                                    {new Date(login.previousLogin).toLocaleString()}
                                 </td>
-                                <td className = "table-cell-style">{login.ipAdd || 'N/A'}</td>
+                                <td className = "table-cell-style">{login.ipadd}</td>
                             </tr>
                         ))}
                     </tbody>
