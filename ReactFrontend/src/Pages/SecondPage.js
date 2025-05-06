@@ -12,6 +12,7 @@ export default function SecondPage() {
     const [confirmPassword, setConfirmPassword] = useState('');
     const [accounts, setAccounts] = useState([]);
     const location = useLocation();
+    const [passEqual, setPassEqual] = useState(true);
     const receivedID = location.state?.data;
     console.log(receivedID);
 
@@ -40,6 +41,10 @@ export default function SecondPage() {
     // Add new account details to the vault
     const sendAccountInfo = async () => {
         console.log(siteName, username, password, confirmPassword);
+        if (password !== confirmPassword) {
+            setPassEqual(false);
+            return;
+        }
         try {
             const postData = {userid: receivedID, appName: siteName, "username": username, "password": password};
             const response = await fetch("http://localhost:8080/api/vaultentry", {
@@ -180,7 +185,11 @@ export default function SecondPage() {
 
                                 {/* Display creation date */}
                                 <p style={{ margin: '0 0 5px', color: '#666' }}>
-                                    <strong>Created At:</strong> {user.createdAt}
+                                    <strong>Created At:</strong> {
+                                    user.lastModified 
+                                        ? new Date(user.lastModified).toLocaleString()
+                                        : 'N/A'
+                                    }
                                 </p>
 
                                 {/* Delete account button */}
@@ -264,6 +273,10 @@ export default function SecondPage() {
                         onChange={(event) => setConfirmPassword(event.target.value)}
                     />
 
+                    {!passEqual && (
+                        <p style={{color: 'red'}}><br />Passwords don't match</p>
+                    )}
+
                     {/* Save account button */}
                     <Button idleText="Save Account" onClick={sendAccountInfo} />
 
@@ -289,10 +302,33 @@ export default function SecondPage() {
             </Popup>
 
             {/* Button to open the popup */}
+            <div style ={{ 
+                display: 'flex',
+                justifyContent: 'corner',
+                marginTop: '5px',
+            }}>
             <Button
                 idleText="Add New Account"
                 onClick={() => setIsPopupOpen(true)}
             />
+            </div>
+
+            {/* Button to go to the login page */}
+            <div style={{ 
+                position: 'fixed',
+                top: '20px',
+                left: '20px',
+
+             }}>
+            <Button
+                idleText="Manager Your Account"
+                onClick={() => window.location.href = '/login'}
+                style={{
+                    marginTop: '20px',
+                }}
+            />
+            </div>
+            
         </div>
     );
 }

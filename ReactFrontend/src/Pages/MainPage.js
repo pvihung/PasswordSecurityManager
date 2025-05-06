@@ -14,6 +14,7 @@ export default function MainPage() {
     const [newAccPass, setNewAccPass] = useState('');
     const [confirmPass, setConfirmPass] = useState('');
     const [passEqual, setPassEqual] = useState(true);
+    const [showErrorPopup, setShowErrorPopup] = useState(false);
     const navigate = useNavigate();
 
     // Make sure that the account exists; log in to account if it does
@@ -40,6 +41,12 @@ export default function MainPage() {
                 })
             } else {
                 console.error(userID);
+                // show error message
+                setShowErrorPopup(true);
+                setTimeout(() => {
+                    setShowErrorPopup(false);
+                }, 1500);
+                console.log("Login failed: ", response.status);
             }
         } catch (error) {
             console.error("Something went wrong here: ", error);
@@ -208,7 +215,44 @@ export default function MainPage() {
                     </div>
                 </div>
             )}
-
+            
+            {/* Login Failed Popup Window */}
+            {showErrorPopup && (
+                <div
+                    style={{
+                        position: 'fixed',
+                        top: '0',
+                        left: '0',
+                        width: '100%',
+                        height: '100%',
+                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
+                        display: 'flex',
+                        justifyContent: 'center',
+                        alignItems: 'center',
+                    }}
+                >
+                    <div
+                        style={{
+                            position: 'relative',
+                            backgroundColor: '#fff',
+                            padding: '20px',
+                            borderRadius: '10px',
+                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
+                            fontFamily: 'Georgia',
+                            fontSize: '16px',
+                            maxWidth: '500px',
+                            width: '100%',
+                            textAlign: 'center',
+                            
+                        }}
+                    >
+                        
+                        <h2 style={{color: 'red'}}>Login Failed</h2>
+                        <p>Invalid username or password.</p>
+                    </div>
+                </div>
+            )}
+            
             {/* Create Account Popup Window */}
             <Popup
                 open={isPopupOpen}
@@ -228,7 +272,7 @@ export default function MainPage() {
                     margin: 'auto',
                 }}
             >
-                    {/* Popup content */}
+                {/* Popup content */}
                 <div
                     style={{
                         padding: '20px',
@@ -241,7 +285,7 @@ export default function MainPage() {
                     <h2>Add New Account</h2>
                     <p>Please enter your new account here.</p>
 
-                            {/* Input fields */}
+                    {/* Input fields */}
                     <input
                         type="text"
                         placeholder="Username"
@@ -267,14 +311,14 @@ export default function MainPage() {
                         onChange={(event) => setConfirmPass(event.target.value)}
                     />
 
-                            {/* Save account button */}
+                    {/* Save account button */}
                     <Button idleText="Save Account" onClick={saveUserInfo} />
 
                     {!passEqual && (
                         <p style={{color: 'red'}}><br />Passwords don't match</p>
                     )}
 
-                            {/* Close button */}
+                    {/* Close button */}
                     <button
                         className="close-button"
                         style={{

@@ -68,25 +68,11 @@ export function Button2({ idleText = "-", onClick, style = {}, className = "" })
   return (
     <ReactiveButton
       buttonState={state}
-      color="red"
+      color="blue"
       size="small"
       idleText={idleText}
-      loadingText="Removing"
-      successText="Removed"
-      style={{
-        width: '30px', 
-        height: '30px', 
-        fontSize: '20px', 
-        fontWeight: 'bold', 
-        textAlign: 'center', 
-        lineHeight: '30px', 
-        borderRadius: '0', 
-        padding: '0', 
-        margin: '0', 
-        cursor: 'pointer', 
-
-      }}
-      className={className}
+      loadingText="Loading"
+      successText="Done"
       onClick={onClickHandler}
     />
   );
