@@ -49,8 +49,6 @@ export default function SecondPage() {
                 setPassEqual(true);
             }, 2000);
             return;
-        } else {
-            setPassEqual(true);
         }
 
         // Check for duplicate accounts
@@ -61,7 +59,6 @@ export default function SecondPage() {
             setDuplicateError(true);
             setTimeout(() => {
                 setDuplicateError(false);
-                setIsPopupOpen(false);
         }, 3000);
             return;
         }
@@ -207,11 +204,8 @@ export default function SecondPage() {
 
                                 {/* Display creation date */}
                                 <p style={{ margin: '0 0 5px', color: '#666' }}>
-                                    <strong>Created At:</strong> {
-                                    user.lastModified 
-                                        ? new Date(user.lastModified).toLocaleString()
-                                        : 'N/A'
-                                    }
+                                    <strong>Created At: </strong>
+                                        {new Date(user.lastModified).toLocaleString()}
                                 </p>
 
                                 {/* Delete account button */}
@@ -327,28 +321,19 @@ export default function SecondPage() {
                 </div>
             </Popup>
             
-            {/* Button to open the popup */}
-            <Button
-                idleText="Add New Account"
-                onClick={() => setIsPopupOpen(true)}
-            />
-                
-                
-            {/*Button leads to login page */}
-            <Button
-                idleText="Manage Your Account"
-                onClick={() => navigate('/Login')}
-                style={{
-                    marginTop: '20px',
-                    backgroundColor: '#007BFF',
-                    color: '#fff',
-                    padding: '10px 20px',
-                    borderRadius: '5px',
-                    fontSize: '1.2em',
-                    
-                }}
-            />
+            <div style={{display: 'flex', gap: '30px'}}>
+                {/* Button to open the popup */}
+                <Button
+                    idleText="Add New Account"
+                    onClick={() => setIsPopupOpen(true)}
+                />
+
+                {/* Button to go to login history table */}
+                <Button
+                    idleText="View Login History"
+                    onClick={() => {navigate('/login', {state: {data: receivedID}});}}
+                />
+            </div>
         </div>
-    
     );
 }

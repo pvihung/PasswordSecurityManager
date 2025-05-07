@@ -50,6 +50,7 @@ public class VaultEntryService {
             dto.setAppName(entry.getAppName());
             dto.setUsername(entry.getUsername());
             dto.setPassword(entry.getPassword());
+            dto.setLastModified(entry.getLastModified());
             dtoList.add(dto);
         }
         return dtoList;

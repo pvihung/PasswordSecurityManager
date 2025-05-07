@@ -51,29 +51,3 @@ export function MenuButton({idleText = "Go!"}) {
     />
   );
 }
-
-export function Button2({ idleText = "-", onClick, style = {}, className = "" }) {
-  const [state, setState] = useState('idle');
-
-  const onClickHandler = () => {
-    setState('loading');
-    setTimeout(() => {
-      setState('success');
-      if (onClick) {
-        onClick();
-      }
-    }, 1500); 
-  };
-
-  return (
-    <ReactiveButton
-      buttonState={state}
-      color="blue"
-      size="small"
-      idleText={idleText}
-      loadingText="Loading"
-      successText="Done"
-      onClick={onClickHandler}
-    />
-  );
-}

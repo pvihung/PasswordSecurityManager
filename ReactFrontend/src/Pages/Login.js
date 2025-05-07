@@ -69,7 +69,7 @@ export default function LoginTable() {
                     {/* Column headers for the login history */}
                     <thead>
                         <tr>
-                            <th className = "column-header">User Name</th>
+                            <th className = "column-header">Login ID</th>
                             <th className = "column-header">Previous Login</th>
                             <th className = "column-header">IP Address</th>
                         </tr>
@@ -79,7 +79,6 @@ export default function LoginTable() {
                         {loginData.map((login) => (
                             <tr key={login.loginId}>
                                 <td className = "table-cell-style">{login.loginId}</td>
-                                <td className = "table-cell-style">{login.userid}</td>
                                 <td className = "table-cell-style">
                                     {new Date(login.previousLogin).toLocaleString()}
                                 </td>

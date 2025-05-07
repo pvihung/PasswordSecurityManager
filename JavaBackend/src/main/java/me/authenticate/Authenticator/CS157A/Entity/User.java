@@ -15,5 +15,4 @@ public class User {
     private String username;
     private String masterPass;
     private String email;
-    private String phoneNumber;
 }

@@ -1,16 +1,7 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
 import java.time.LocalDateTime;
-
-import com.fasterxml.jackson.annotation.JsonFormat;
-
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.JoinColumn;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.Data;
 
 @Entity
@@ -25,7 +16,6 @@ public class VaultEntry {
     private String appName;
     private String username;
     private String password;
-    @JsonFormat (pattern = "yyyy-MM-dd HH:mm:ss")
     private LocalDateTime lastModified = LocalDateTime.now();
 
     public LocalDateTime getLastModified() {
