@@ -18,13 +18,6 @@ public class VaultEntry {
     private String password;
     private LocalDateTime lastModified = LocalDateTime.now();
 
-    public LocalDateTime getLastModified() {
-        return lastModified;
-    }
-    public void setLastModified(LocalDateTime lastModified) {
-        this.lastModified = lastModified;
-    }
-
     public void encrypt() {
         StringBuilder encryptedPassword = new StringBuilder(password);
         int charVal;

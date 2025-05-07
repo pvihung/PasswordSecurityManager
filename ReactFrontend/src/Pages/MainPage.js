@@ -16,8 +16,8 @@ export default function MainPage() {
     const [passEqual, setPassEqual] = useState(true);
     const [resetEmail, setResetEmail] = useState('');
     const [validEmail, setValidEmail] = useState(true);
+    const [emailRegistered, setEmailRegistered] = useState(true);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
-
     const navigate = useNavigate();
 
     // Make sure that the account exists; log in to account if it does
@@ -80,7 +80,21 @@ export default function MainPage() {
         if (!(resetEmail.match(/^\S+@\S+\.\S+$/))) {
             setValidEmail(false);
         } else {
+        setValidEmail(true);
+            try {
+                const response = await fetch("http://localhost:8080/api/verify-email", {
+                    method: 'POST',
+                    body: resetEmail
+                });
+                if (response.ok) {
+                    setEmailRegistered(true);
 
+                } else {
+                    setEmailRegistered(false);
+                }
+            } catch (error) {
+                console.error("Forgot request not saved: ", error);
+            }
         }
     }
 
@@ -213,6 +227,9 @@ export default function MainPage() {
                             <Button onClick={sendForgotEmail} />
                             {!validEmail && (
                                 <p style={{color: 'red'}}><br />Invalid email</p>
+                            )}
+                            {!emailRegistered && (
+                                <p style={{color: 'red'}}><br />Email not registered</p>
                             )}
                         </div>
                     </div>
