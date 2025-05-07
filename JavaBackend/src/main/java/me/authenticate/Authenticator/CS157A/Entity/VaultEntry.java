@@ -38,7 +38,7 @@ public class VaultEntry {
         password = encryptedPassword.toString();
     }
 
-    public String decrypt() {
+    public void decrypt() {
         StringBuilder decryptedPassword = new StringBuilder(password);
         int charVal;
         for(int i = 0; i < password.length(); i++) {
@@ -55,6 +55,6 @@ public class VaultEntry {
                     decryptedPassword.setCharAt(i, (char)(charVal - 2));
             }
         }
-        return decryptedPassword.toString();
+        password = decryptedPassword.toString();
     }
 }
