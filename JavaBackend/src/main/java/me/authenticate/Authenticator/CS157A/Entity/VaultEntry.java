@@ -1,11 +1,8 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import lombok.Data;
 import java.time.LocalDateTime;
+import jakarta.persistence.*;
+import lombok.Data;
 
 @Entity
 @Data
@@ -13,13 +10,15 @@ public class VaultEntry {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int entryID;
-    private int userID;
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    private User user;
     private String appName;
     private String username;
-    private static String password;
-    private LocalDateTime lastModified;
+    private String password;
+    private LocalDateTime lastModified = LocalDateTime.now();
 
-    public static void encrypt() {
+    public void encrypt() {
         StringBuilder encryptedPassword = new StringBuilder(password);
         int charVal;
         for(int i = 0; i < password.length(); i++) {
@@ -39,7 +38,7 @@ public class VaultEntry {
         password = encryptedPassword.toString();
     }
 
-    public static String decrypt() {
+    public String decrypt() {
         StringBuilder decryptedPassword = new StringBuilder(password);
         int charVal;
         for(int i = 0; i < password.length(); i++) {

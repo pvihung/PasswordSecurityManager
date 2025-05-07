@@ -1,26 +1,26 @@
 import './App.css';
-import Button from './Buttons/Buttons.js';
 import ErrorPage from './Pages/Error404.js';
 import MainPage from './Pages/MainPage.js';
-import SecondPage from './Pages/SecondPage.js'; 
-import { Route, Routes } from 'react-router-dom';
-import Popup from 'reactjs-popup';
+import Login from './Pages/Login.js';
+import {Route, Routes} from 'react-router-dom';
+import SecondPage from './Pages/SecondPage.js';
 function App() {
   return (
     <>
         <div>
             <Routes>
                 {/* Route for MainPage */}
-                <Route path='' element={<MainPage />} /> 
-                
+                <Route path='' element={<MainPage />} />
+
                 {/* Route for SecondPage */}
-                <Route path='/manager' element={<SecondPage />} /> 
-                
+                <Route path='/manager' element={<SecondPage />} />
+
+                {/* Route for Login */}
+                <Route path='/login' element={<Login />} />
+
                 {/* Catch-all route for ErrorPage */}
                 <Route path='*' element={<ErrorPage />} />
             </Routes>
-
-            
         </div>
     </>
   );
