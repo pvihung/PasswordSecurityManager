@@ -39,6 +39,7 @@ public class VaultEntryService {
     }
 
     public VaultEntry retrieveEntry(int ID) {
+        repo.findById(ID).orElse(null).decrypt();
         return repo.findById(ID).orElse(null);
     }
 
