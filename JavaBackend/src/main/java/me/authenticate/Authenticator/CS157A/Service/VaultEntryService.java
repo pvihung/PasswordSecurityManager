@@ -26,6 +26,7 @@ public class VaultEntryService {
         ve.setAppName(v.getAppName());
         ve.setUsername(v.getUsername());
         ve.setPassword(v.getPassword());
+        ve.encrypt();
         ve.setUser(u);
         return repo.save(ve);
     }
