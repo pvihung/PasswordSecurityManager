@@ -1,9 +1,6 @@
 package me.authenticate.Authenticator.CS157A.Entity;
 
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
+import jakarta.persistence.*;
 import lombok.Data;
 import java.time.LocalDateTime;
 import java.util.Random;
@@ -14,7 +11,10 @@ public class ForgotRequest {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private int requestID;
-    private int userID;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "userid")
+    private User user;
     private String resetToken = GenerateToken();
     private LocalDateTime requestedAt = LocalDateTime.now();
     private String sentTo;

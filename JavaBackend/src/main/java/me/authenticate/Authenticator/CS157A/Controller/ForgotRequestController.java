@@ -22,7 +22,7 @@ public class ForgotRequestController {
         return ResponseEntity.badRequest().build();
     }
 
-    public void recordRequest(@RequestBody String email) {
-        service.recordRequest(email);
+    public String recordRequest(@RequestBody String email) {
+        return service.recordRequest(email);
     }
 }

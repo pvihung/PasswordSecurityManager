@@ -86,9 +86,15 @@ export default function MainPage() {
                     method: 'POST',
                     body: resetEmail
                 });
+                console.log (response);
                 if (response.ok) {
                     setEmailRegistered(true);
-
+                    const code = await response.text();
+                    console.log(code);
+                    const emailSender =
+                        await fetch(`http://localhost:8080/api/sendMail/${resetEmail}/${code}`, {
+                            method: 'GET'
+                    });
                 } else {
                     setEmailRegistered(false);
                 }
