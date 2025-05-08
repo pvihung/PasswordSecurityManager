@@ -61,3 +61,7 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 3. **Database:** MySQL 8.4
 4. **Frontend runtime:** Node.js 20
 5. **Frontend framework:** React 18  
+
+---
+***Note***
+This project can work perfectly without sample data. However, we also provide you with our sample data to use and test on. The sample data will be stored in **Sample_Data** folder
