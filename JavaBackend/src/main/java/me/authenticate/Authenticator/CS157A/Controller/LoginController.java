@@ -20,7 +20,7 @@ public class LoginController {
         return service.saveLogin(l);
     }
     
-    @GetMapping("show-login/{ID}")
+    @GetMapping("/show-login/{ID}")
     public List<LoginDTO> retrieveLogins(@PathVariable int ID) {
         return service.retrieveLogins(ID);
     }
