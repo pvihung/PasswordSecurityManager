@@ -29,4 +29,9 @@ public class UserController {
             return ResponseEntity.status(HttpStatus.NOT_FOUND).body("Incorrect username or password.");
         }
     }
+
+    @PutMapping("/modify-password/{newPass}/{email}")
+    public ResponseEntity<Void> modifyPassword(@PathVariable String newPass, @PathVariable String email) {
+        return service.modifyPassword(newPass, email);
+    }
 }

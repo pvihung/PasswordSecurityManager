@@ -14,8 +14,9 @@ public class EmailController {
     @Autowired
     private EmailService emailService;
 
-    @GetMapping("/sendMail")
-    public String sendMail(@RequestParam String to, @RequestParam String subject, @RequestParam String text) {
+    @GetMapping("/sendMail/{to}/{text}")
+    public String sendMail(@PathVariable String to, @PathVariable String text) {
+        String subject = "CS157A Authenticator Forgot Request";
         return emailService.sendSimpleMail(to, subject, text);
     }
 }

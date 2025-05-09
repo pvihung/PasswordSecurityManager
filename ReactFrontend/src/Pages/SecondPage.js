@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useCallback} from 'react';
 import Button from '../Buttons/Buttons';
 import Popup from 'reactjs-popup';
 import './PageClasses.css';
@@ -16,29 +16,26 @@ export default function SecondPage() {
     const location = useLocation();
     const [duplicateError, setDuplicateError] = useState(false);
     const receivedID = location.state?.data;
-    console.log(receivedID);
+
+    const loadAccounts = useCallback(async () => {
+        try {
+            const accountsFetch = await fetch(`http://localhost:8080/api/vault/${receivedID}`, {
+                method: 'GET'
+            });
+            console.log(accountsFetch);
+            if (!accountsFetch.ok) {
+                console.error("Accounts fetch failed");
+            } else {
+                const accountsData = await accountsFetch.json();
+                setAccounts(accountsData);
+            }
+        } catch (error) {
+            console.error("Accounts fetch failed: ", error);
+        }
+    }, [receivedID]);
 
     // Grab the user's account data from database and store in array
-    useEffect(() => {
-        async function loadAccounts() {
-            try {
-                const accountsFetch = await fetch(`http://localhost:8080/api/vault/${receivedID}`, {
-                    method: 'GET'
-                });
-                console.log(accountsFetch);
-                if (!accountsFetch.ok) {
-                    console.error("Accounts fetch failed");
-                } else {
-                    const accountsData = await accountsFetch.json();
-                    setAccounts(accountsData);
-                    console.log(accounts);
-                }
-            } catch (error) {
-                console.error("Accounts fetch failed: ", error);
-            }
-        };
-        loadAccounts();
-    }, [receivedID]);
+    useEffect(() => {loadAccounts();}, [loadAccounts]);
 
     // Add new account details to the vault
     const sendAccountInfo = async () => {
@@ -71,9 +68,8 @@ export default function SecondPage() {
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify(postData)
             });
-            const jsonData = await response.json();
-            console.log("The vaultentry creation worked: ", jsonData);
-            accounts.push(postData);
+            loadAccounts();
+            setIsPopupOpen(false);
         } catch (exception) {
             console.error("It didn't work: ", exception.message);
         }
@@ -332,6 +328,12 @@ export default function SecondPage() {
                 <Button
                     idleText="View Login History"
                     onClick={() => {navigate('/login', {state: {data: receivedID}});}}
+                />
+
+                {/* Button to go back to account sign in */}
+                <Button
+                    idleText="Log Out"
+                    onClick={() => navigate('/')}
                 />
             </div>
         </div>

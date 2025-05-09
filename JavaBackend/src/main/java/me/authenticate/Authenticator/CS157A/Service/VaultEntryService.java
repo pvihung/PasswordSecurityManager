@@ -26,6 +26,7 @@ public class VaultEntryService {
         ve.setAppName(v.getAppName());
         ve.setUsername(v.getUsername());
         ve.setPassword(v.getPassword());
+        ve.encrypt();
         ve.setUser(u);
         return repo.save(ve);
     }
@@ -37,8 +38,16 @@ public class VaultEntryService {
         return ResponseEntity.noContent().build();
     }
 
-    public VaultEntry retrieveEntry(int ID) {
-        return repo.findById(ID).orElse(null);
+    public VaultEntryDTO retrieveEntry(int ID) {
+        VaultEntry v = repo.findById(ID).orElse(null);
+        v.decrypt();
+        VaultEntryDTO ve = new VaultEntryDTO();
+        ve.setUserid(v.getUser().getUserID());
+        ve.setUsername(v.getUsername());
+        ve.setPassword(v.getPassword());
+        ve.setLastModified(v.getLastModified());
+        ve.setAppName(v.getAppName());
+        return ve;
     }
 
     public List<VaultEntryDTO> retrieveVault(int ID) {
@@ -49,6 +58,7 @@ public class VaultEntryService {
             dto.setUserid(entry.getUser().getUserID());
             dto.setAppName(entry.getAppName());
             dto.setUsername(entry.getUsername());
+            entry.decrypt();
             dto.setPassword(entry.getPassword());
             dto.setLastModified(entry.getLastModified());
             dtoList.add(dto);

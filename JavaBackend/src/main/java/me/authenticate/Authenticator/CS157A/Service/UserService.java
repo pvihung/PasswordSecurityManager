@@ -34,4 +34,11 @@ public class UserService {
         }
         return 0;
     }
+
+    public ResponseEntity<Void> modifyPassword(String newPass, String email) {
+        User u = repo.findUserByEmail(email).get();
+        u.setMasterPass(newPass);
+        repo.save(u);
+        return ResponseEntity.ok().build();
+    }
 }

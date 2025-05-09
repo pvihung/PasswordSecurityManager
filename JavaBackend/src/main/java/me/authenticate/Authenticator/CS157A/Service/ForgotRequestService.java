@@ -17,10 +17,18 @@ public class ForgotRequestService {
         return userList.existsByEmail(trimmed);
     }
 
-    public void recordRequest(String email) {
+    public String recordRequest(String email) {
         ForgotRequest f = new ForgotRequest();
         f.setSentTo(email);
-        f.setUserID(userList.findUserByEmail(email).get().getUserID());
+        f.setUser(userList.findUserByEmail(email).get());
         repo.save(f);
+        return f.getResetToken();
+    }
+
+    public boolean verifyCode(String code, String email) {
+        if (repo.existsByResetToken(code)) {
+            return repo.findByResetToken(code).get().getSentTo().equals(email);
+        }
+        return false;
     }
 }

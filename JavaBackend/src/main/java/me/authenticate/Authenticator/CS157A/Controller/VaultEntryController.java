@@ -22,8 +22,8 @@ public class VaultEntryController {
     }
 
     @GetMapping("/vaultentry")
-    public VaultEntry retrieveEntry(@RequestBody VaultEntry v) {
-        return service.retrieveEntry(v.getEntryID());
+    public VaultEntryDTO retrieveEntry(@PathVariable int ID) {
+        return service.retrieveEntry(ID);
     }
 
     @DeleteMapping("/vaultentry")

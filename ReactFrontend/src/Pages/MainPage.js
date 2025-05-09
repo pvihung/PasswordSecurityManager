@@ -18,6 +18,10 @@ export default function MainPage() {
     const [validEmail, setValidEmail] = useState(true);
     const [emailRegistered, setEmailRegistered] = useState(true);
     const [showErrorPopup, setShowErrorPopup] = useState(false);
+    const [twoFactorPopup, setTwoFactorPopup] = useState(false);
+    const [secCode, setSecCode] = useState('');
+    const [wrongCode, setWrongCode] = useState(false);
+    const [confirmed2FA, setConfirmed2FA] = useState(false);
     const navigate = useNavigate();
 
     // Make sure that the account exists; log in to account if it does
@@ -82,19 +86,65 @@ export default function MainPage() {
         } else {
         setValidEmail(true);
             try {
+                setEmailRegistered(true);
                 const response = await fetch("http://localhost:8080/api/verify-email", {
                     method: 'POST',
                     body: resetEmail
                 });
+                console.log (response);
                 if (response.ok) {
                     setEmailRegistered(true);
-
+                    const code = await response.text();
+                    const emailSender =
+                        await fetch(`http://localhost:8080/api/sendMail/${resetEmail}/${code}`, {
+                            method: 'GET'
+                    });
+                    setIsForgotPopupOpen(false);
+                    setTwoFactorPopup(true);
                 } else {
                     setEmailRegistered(false);
                 }
             } catch (error) {
                 console.error("Forgot request not saved: ", error);
             }
+        }
+    }
+
+    // Check if the correct code is provided; offer password reset for login
+    const verifyResetCode = async () => {
+        try {
+            const response =
+                await fetch(`http://localhost:8080/api/verify-code/${secCode}/${resetEmail}`, {
+                    method: 'GET'
+            });
+            if (response) {
+                setWrongCode(false);
+                setConfirmed2FA(true);
+            } else {
+                setWrongCode(true);
+                setConfirmed2FA(false);
+            }
+        } catch (error) {
+            console.error("Could not obtain proper reset token: ", error);
+        }
+    }
+
+    // Edit the account details by changing to the new password
+    const modifyMasterPass = async () => {
+        if (password === confirmPass) {
+            setPassEqual(true);
+            try {
+                const response =
+                    await fetch(`http://localhost:8080/api/modify-password/${password}/${resetEmail}`, {
+                        method: 'PUT'
+                });
+                console.log(response);
+                setTwoFactorPopup(false);
+            } catch (error) {
+                console.log("Failed to change master password: ", error);
+            }
+        } else {
+            setPassEqual(false);
         }
     }
 
@@ -167,48 +217,15 @@ export default function MainPage() {
 
             {/* Forgot Password Popup Window */}
             {isForgotPopupOpen && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: '0',
-                        left: '0',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
+                <div className="popup-window-outside">
+
                     {/* Inside Popup Window */}
-                    <div
-                        style={{
-                            position: 'relative',
-                            backgroundColor: '#fff',
-                            padding: '20px',
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                            fontFamily: 'Georgia',
-                            fontSize: '16px',
-                            maxWidth: '500px',
-                            width: '100%',
-                            textAlign: 'center',
-                        }}
-                    >
+                    <div className="popup-window-inside">
+
                         {/* Close Button */}
                         <button
-                            className="close-button"
-                            style={{
-                                position: 'absolute',
-                                top: '10px',
-                                right: '10px',
-                                background: 'none',
-                                border: 'none',
-                                fontSize: '30px',
-                                fontWeight: 'bold',
-                                cursor: 'pointer',
-                                color: 'red',
-                            }}
+                            className="popup-close-button"
+                            style={{fontSize: '30px'}}
                             onClick={() => {setValidEmail(true); setIsForgotPopupOpen(false)}}
                         >
                             &times;
@@ -235,38 +252,65 @@ export default function MainPage() {
                     </div>
                 </div>
             )}
-            
+
+            {/* Password Code Reset Window */}
+            {twoFactorPopup && (
+                <div className="popup-window-outside">
+
+                    {/* Inside Popup Window */}
+                    <div className="popup-window-inside">
+
+                        {/* Close Button */}
+                        <button
+                            className="popup-close-button"
+                            style={{fontSize: '30px'}}
+                            onClick={() => {setTwoFactorPopup(false)}}
+                        >
+                            &times;
+                        </button>
+
+                        {/* Popup Content */}
+                        <h2>Forgot Password</h2>
+                        <p>Enter the 6 digit security code sent to your email:</p>
+                        <input
+                            type="text"
+                            placeholder="Security Code"
+                            className="inputBlock"
+                            onChange={(event) => setSecCode(event.target.value)}
+                        />
+                        <div style={{ marginTop: '10px' }}>
+                            <Button onClick={verifyResetCode} />
+                            {wrongCode && (
+                                <p style={{color: 'red'}}><br />Incorrect code</p>
+                            )}
+                            {confirmed2FA && (<>
+                                <p>Success! Enter your new password here:</p>
+                                <input
+                                    type="password"
+                                    placeholder="Password"
+                                    className="inputBlock"
+                                    onChange={(event) => setPassword(event.target.value)}
+                                />
+                                <input
+                                    type="password"
+                                    placeholder="Confirm Password"
+                                    className="inputBlock"
+                                    onChange={(event) => setConfirmPass(event.target.value)}
+                                />
+                                <Button idleText="Save New Password" onClick={modifyMasterPass} />
+                                {!passEqual && (
+                                    <p style={{color: 'red'}}><br />Passwords don't match</p>
+                                )}
+                            </>)}
+                        </div>
+                    </div>
+                </div>
+            )}
+
             {/* Login Failed Popup Window */}
             {showErrorPopup && (
-                <div
-                    style={{
-                        position: 'fixed',
-                        top: '0',
-                        left: '0',
-                        width: '100%',
-                        height: '100%',
-                        backgroundColor: 'rgba(0, 0, 0, 0.5)',
-                        display: 'flex',
-                        justifyContent: 'center',
-                        alignItems: 'center',
-                    }}
-                >
-                    <div
-                        style={{
-                            position: 'relative',
-                            backgroundColor: '#fff',
-                            padding: '20px',
-                            borderRadius: '10px',
-                            boxShadow: '0 4px 8px rgba(0, 0, 0, 0.2)',
-                            fontFamily: 'Georgia',
-                            fontSize: '16px',
-                            maxWidth: '500px',
-                            width: '100%',
-                            textAlign: 'center',
-                            
-                        }}
-                    >
-                        
+                <div className="popup-window-outside">
+                    <div className="popup-window-inside">
                         <h2 style={{color: 'red'}}>Login Failed</h2>
                         <p>Invalid username or password.</p>
                     </div>
@@ -340,18 +384,8 @@ export default function MainPage() {
 
                     {/* Close button */}
                     <button
-                        className="close-button"
-                        style={{
-                            position: 'absolute',
-                            top: '0px',
-                            right: '10px',
-                            background: 'none',
-                            border: 'none',
-                            fontSize: '40px',
-                            fontWeight: 'bold',
-                            cursor: 'pointer',
-                            color: 'red',
-                        }}
+                        className="popup-close-button"
+                        style={{fontSize: '40px'}}
                         onClick={() => {setPassEqual(true); setIsPopupOpen(false)}}
                     >
                         &times;
