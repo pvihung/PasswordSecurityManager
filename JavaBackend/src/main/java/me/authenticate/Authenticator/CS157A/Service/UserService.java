@@ -36,7 +36,9 @@ public class UserService {
     }
 
     public ResponseEntity<Void> modifyPassword(String newPass, String email) {
-        repo.findUserByEmail(email).get().setMasterPass(newPass);
+        User u = repo.findUserByEmail(email).get();
+        u.setMasterPass(newPass);
+        repo.save(u);
         return ResponseEntity.ok().build();
     }
 }

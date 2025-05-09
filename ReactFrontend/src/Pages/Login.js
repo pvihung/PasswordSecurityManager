@@ -1,11 +1,13 @@
 import { useState, useEffect } from 'react';
-import {useLocation} from 'react-router-dom';
+import {useNavigate, useLocation} from 'react-router-dom';
 import "./PageClasses.css";
+import Button from '../Buttons/Buttons.js';
 
 export default function LoginTable() {
     const [loginData, setLoginData] = useState([]);
     const location = useLocation();
     const receivedID = location.state?.data;
+    const navigate = useNavigate();
 
     useEffect(() => {
         fetchLoginData();
@@ -87,6 +89,16 @@ export default function LoginTable() {
                         ))}
                     </tbody>
                 </table>
+            </div>
+            <div style={{display: 'flex', gap: '50px'}}>
+                <Button
+                    idleText="Back to Password Manager"
+                    onClick={() => navigate('/manager', {state: {data: receivedID}})}
+                />
+                <Button
+                    idleText="Log Out"
+                    onClick={() => navigate('/')}
+                />
             </div>
         </div>
     );

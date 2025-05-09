@@ -329,6 +329,12 @@ export default function SecondPage() {
                     idleText="View Login History"
                     onClick={() => {navigate('/login', {state: {data: receivedID}});}}
                 />
+
+                {/* Button to go back to account sign in */}
+                <Button
+                    idleText="Log Out"
+                    onClick={() => navigate('/')}
+                />
             </div>
         </div>
     );
