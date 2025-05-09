@@ -64,4 +64,4 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 
 ---
 ***Note***
-This project can work perfectly without sample data. However, we also provide you with our sample data to use and test on. The sample data will be stored in **Sample_Data** folder
+This project can work perfectly without sample data. However, we also provide you with our sample data to use and test on. The sample data will be stored in **Sample_Data** folder (as CSV) or SQLScript (as SQL Text File).
