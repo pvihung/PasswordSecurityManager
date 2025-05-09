@@ -68,6 +68,7 @@ This project can work perfectly without sample data. However, we also provide yo
 
 ___
 #Instructions to Run
+
 **1. Clone this GitHub repository**
 
 **2. There are 2 key source directories: JavaBackend and ReactFrontend:**
