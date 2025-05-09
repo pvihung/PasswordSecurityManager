@@ -63,5 +63,23 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 5. **Frontend framework:** React 18  
 
 ---
-***Note***
+***Note:***
 This project can work perfectly without sample data. However, we also provide you with our sample data to use and test on. The sample data will be stored in **Sample_Data** folder (as CSV) or SQLScript (as SQL Text File).
+
+___
+#Instructions to Run
+**1. Clone this GitHub repository**
+
+**2. There are 2 key source directories: JavaBackend and ReactFrontend:**
+
+&emsp;**In your IDE (or other Java Runtime Environment), 
+run AuthenticatorCs157AApplication.java to establish the server connection.**
+
+***Note:***
+The server connection is described under the `application.properties` file 
+in the resources directory. By default, a MySQL connection to our server is 
+set up, but users can replace the credentials with their own database and 
+account login to allow the application to connect to a different server.
+
+&emsp;**From command line, change to the ReactFrontend directory and run 
+`npm start` to launch the web application.**
