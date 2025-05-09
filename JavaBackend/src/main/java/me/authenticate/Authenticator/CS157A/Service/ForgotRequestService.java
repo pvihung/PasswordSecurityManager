@@ -24,4 +24,11 @@ public class ForgotRequestService {
         repo.save(f);
         return f.getResetToken();
     }
+
+    public boolean verifyCode(String code, String email) {
+        if (repo.existsByResetToken(code)) {
+            return repo.findByResetToken(code).get().getSentTo().equals(email);
+        }
+        return false;
+    }
 }
