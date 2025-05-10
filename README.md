@@ -76,11 +76,8 @@ ___
 &emsp;**In your IDE (or other Java Runtime Environment), 
 run AuthenticatorCs157AApplication.java to establish the server connection.**
 
-***Note:***
-The server connection is described under the `application.properties` file 
-in the resources directory. By default, a MySQL connection to our server is 
-set up, but users can replace the credentials with their own database and 
-account login to allow the application to connect to a different server.
 
-&emsp;**From command line, change to the ReactFrontend directory and run 
-`npm start` to launch the web application.**
+***Note:***
+The server connection is described under the `application.properties` file in the resources directory. By default, a MySQL connection to our server is set up, but users can replace the credentials with their own database and account login to allow the application to connect to a different server.
+
+&emsp;**From command line, change to the ReactFrontend directory and run `npm start` to launch the web application.**
