@@ -66,7 +66,17 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 ***Note:***
 This project can work perfectly without sample data. However, we also provide you with our sample data to use and test on. The sample data will be stored in **Sample_Data** folder (as CSV) or SQLScript (as SQL Text File).
 
-___
+---
+## Project Structure:
+
+***.idea:*** IntelliJ IDEA project settings and metadata
+***.vscode:*** VS Code workspace settings and debug configurations
+***JavaBackend:*** Java-based REST API
+***ReactFrontend:*** React source code
+***SQLScript:*** Database initialization & migration scripts
+***Sample_Data:*** Sample datasets (in CSV if needed)
+
+---
 #Instructions to Run
 
 **1. Clone this GitHub repository**
