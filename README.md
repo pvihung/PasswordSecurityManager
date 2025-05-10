@@ -66,10 +66,15 @@ You don't have to ever use `eject`. The curated feature set is suitable for smal
 ## Project Structure:
 
 ***.idea:*** IntelliJ IDEA project settings and metadata
+
 ***.vscode:*** VS Code workspace settings and debug configurations
+
 ***JavaBackend:*** Java-based REST API
+
 ***ReactFrontend:*** React source code
+
 ***SQLScript:*** Database initialization & migration scripts
+
 ***Sample_Data:*** Sample datasets (in CSV if needed)
 
 ---
