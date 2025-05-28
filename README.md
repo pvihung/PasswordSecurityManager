@@ -1,9 +1,7 @@
 # Password Security Manager
 
 
-**Group Members:** Hung Pham, Justin Dam, Tony Fang
-
-**Instructor:** Tahereh Arabghalizi  
+**Group Members:** Hung Pham, Justin Dam, Tony Fang  
 
 ---
 ## Project Overview
